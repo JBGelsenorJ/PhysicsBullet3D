@@ -49,7 +49,11 @@ update_status ModuleSceneIntro::Update(float dt)
 		if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 		{
 			//TODO 3: Create a "new" sphere, and add it to the "primitives" DynArray
-
+			Sphere* sphere;
+			sphere = new Sphere;
+			sphere->radius = 0.5f;
+			sphere->SetPos(0.f, 0.f, 0.f); 
+			primitives.PushBack(sphere);
 			//TODO 9: Push ModuleSceneIntro to the sphere collision listeners
 		}
 	}

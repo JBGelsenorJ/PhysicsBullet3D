@@ -20,6 +20,20 @@ PhysBody3D::~PhysBody3D()
 	//TODO 2: And delete them!
 	//Make sure there's actually something to delete, check before deleting
 
+	if (motionState != nullptr)
+	{
+		delete motionState;
+
+	}
+	if (colShape != nullptr)
+	{
+		delete colShape;
+	}
+	if (body != nullptr)
+	{
+		delete body;
+	}
+
 }
 
 void PhysBody3D::InitBody(Sphere* primitive, float mass)
@@ -28,7 +42,7 @@ void PhysBody3D::InitBody(Sphere* primitive, float mass)
 	assert(HasBody() == false);
 	parentPrimitive = primitive;
 
-	btCollisionShape* colShape = new btSphereShape(primitive->radius);
+	colShape = new btSphereShape(primitive->radius);
 
 	btTransform startTransform;
 	startTransform.setFromOpenGLMatrix(&primitive->transform);
@@ -37,7 +51,7 @@ void PhysBody3D::InitBody(Sphere* primitive, float mass)
 	if (mass != 0.f)
 		colShape->calculateLocalInertia(mass, localInertia);
 
-	btDefaultMotionState* motionState = new btDefaultMotionState(startTransform);
+	motionState = new btDefaultMotionState(startTransform);
 	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, motionState, colShape, localInertia);
 
 	body = new btRigidBody(rbInfo);
