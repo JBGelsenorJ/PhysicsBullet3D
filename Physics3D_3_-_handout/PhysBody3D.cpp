@@ -23,7 +23,6 @@ PhysBody3D::~PhysBody3D()
 	if (motionState != nullptr)
 	{
 		delete motionState;
-
 	}
 	if (colShape != nullptr)
 	{

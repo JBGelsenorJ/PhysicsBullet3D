@@ -35,6 +35,7 @@ public:
 protected:
 	virtual void InnerRender() const;
 	PrimitiveTypes type;
+	PhysBody3D body;
 };
 
 // ============================================
