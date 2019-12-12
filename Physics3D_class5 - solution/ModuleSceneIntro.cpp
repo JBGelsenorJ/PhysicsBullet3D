@@ -34,9 +34,13 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
-	Plane p(0, 1, 0, 0);
+	/*Plane p(0, 1, 0, 0);
 	p.axis = true;
-	p.Render();
+	p.Render();*/
+
+	Cube ground(1000, 2, 1000);
+	ground.SetPos(0, -1, 0);
+	ground.Render();
 
 	return UPDATE_CONTINUE;
 }
