@@ -40,6 +40,7 @@ update_status ModuleSceneIntro::Update(float dt)
 
 	Cube ground(1000, 2, 1000);
 	ground.SetPos(0, -1, 0);
+	ground.color = Green;
 	ground.Render();
 
 	return UPDATE_CONTINUE;

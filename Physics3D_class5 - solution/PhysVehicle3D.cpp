@@ -60,8 +60,8 @@ void PhysVehicle3D::Render()
 	cabin.transform.M[13] += cabin_offset.getY();
 	cabin.transform.M[14] += cabin_offset.getZ();
 
-	chassis.color = Blue;
-	cabin.color = White;
+	chassis.color = Yellow;
+	cabin.color = { (0.4f), (0.6f), (0.3f), (1.0f) };
 
 	chassis.Render();
 	cabin.Render();
