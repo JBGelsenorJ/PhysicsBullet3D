@@ -137,7 +137,8 @@ update_status ModulePlayer::Update(float dt)
 
 	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
-		brake = BRAKE_POWER;
+		if (vehicle->GetKmh() > 0) brake = BRAKE_POWER;
+		else acceleration = -500;
 	}
 
 	vehicle->ApplyEngineForce(acceleration);
