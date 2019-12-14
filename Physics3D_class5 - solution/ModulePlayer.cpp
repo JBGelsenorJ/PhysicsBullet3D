@@ -101,7 +101,7 @@ bool ModulePlayer::Start()
 
 	vehicle = App->physics->AddVehicle(car);
 	vehicle->SetPos(0, 12, 10);
-	
+
 	return true;
 }
 
@@ -120,7 +120,12 @@ update_status ModulePlayer::Update(float dt)
 
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
-		acceleration = MAX_ACCELERATION;
+		if (vehicle->GetKmh() >= 150)
+			acceleration = 0;
+		else
+			acceleration = MAX_ACCELERATION;
+			
+		
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
@@ -141,6 +146,11 @@ update_status ModulePlayer::Update(float dt)
 		else acceleration = -500;
 	}
 
+	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
+	{
+		Nitro();
+	}
+
 	vehicle->ApplyEngineForce(acceleration);
 	vehicle->Turn(turn);
 	vehicle->Brake(brake);
@@ -152,6 +162,28 @@ update_status ModulePlayer::Update(float dt)
 	App->window->SetTitle(title);
 
 	return UPDATE_CONTINUE;
+}
+
+void ModulePlayer::Nitro()
+{
+
+	if (nitro)
+	{
+		nitroTimer.Start();
+		nitro = false;
+	}
+
+
+	if (nitroTimer.Read() < 1500)
+	{
+		if (vehicle->GetKmh() <= 150)
+			acceleration = MAX_ACCELERATION * 5;
+		else
+			acceleration = 0;
+
+	}
+
+	
 }
 
 
