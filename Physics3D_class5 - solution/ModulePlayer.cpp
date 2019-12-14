@@ -173,17 +173,15 @@ void ModulePlayer::Nitro()
 		nitro = false;
 	}
 
-
-	if (nitroTimer.Read() < 1500)
+	if (nitroTimer.Read() < 300)
 	{
 		if (vehicle->GetKmh() <= 150)
-			acceleration = MAX_ACCELERATION * 5;
+			acceleration = MAX_ACCELERATION * 20;
 		else
 			acceleration = 0;
 
 	}
 
-	
 }
 
 
