@@ -18,16 +18,18 @@ bool ModuleSceneIntro::Start()
 	bool ret = true;
 
 	//Road creation
-	Cube road(2, 2, 2);
+	Cube road(2, 5, 2);
+	Cube shop1(100, 40, 1);
+	Cube shop2(1, 40, 100);
 	road.color.Set(0.0f, 0.0f, 0.0f);
 	int roadWidth = 20;
 	
-	CreateRect(-10.0f, 0, 0, roadWidth, 100, road, ORIENTATION::NORTH);
-
-	
+	CreateRect(-10.0f, 0, 0, roadWidth, 50, road, ORIENTATION::NORTH);
+	CreateRect(-55, 0, 100, 110, 1, shop1, ORIENTATION::NORTH);
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
-
+	shop2.SetPos(0, 0, 0);
+	shop2.Render();
 	return ret;
 }
 
