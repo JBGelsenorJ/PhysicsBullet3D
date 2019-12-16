@@ -28,6 +28,17 @@ struct VehicleInfo
 	vec3 chassis_offset;
 	vec3 cabin_size;
 	vec3 cabin_offset;
+	vec3 backward_size;
+	vec3 backward_offset;
+	vec3 right_size;
+	vec3 right_offset;
+	vec3 left_size;
+	vec3 left_offset;
+	vec3 rightHandle_size;
+	vec3 rightHandle_offset;
+	vec3 leftHandle_size;
+	vec3 leftHandle_offset;
+
 	float mass;
 	float suspensionStiffness; // default to 5.88 / 10.0 offroad / 50.0 sports car / 200.0 F1 car
 	float suspensionCompression; // default to 0.83
@@ -36,6 +47,7 @@ struct VehicleInfo
 	float frictionSlip; // defaults to 10.5 / friction with the ground. 0.8 should be good but high values feels better (kart 1000.0)
 	float maxSuspensionForce; // defaults to 6000 / max force to the chassis
 
+	Wheel* handle;
 	Wheel* wheels;
 	int num_wheels;
 };
