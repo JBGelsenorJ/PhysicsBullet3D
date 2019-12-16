@@ -35,6 +35,11 @@ public:
 	void CreateRect(const float& x, const float& y, const float& z, const float& width, const float& length, const Cube& cube, ORIENTATION orientation = ORIENTATION::NORTH);
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
+	//This function will create and set all boxes in map, later will be added to a item list
+	void SetBoxes(const float& x, const float& y, const float& z);
+	void CheckBoxes();
+
+
 public:
 	/*
 	PhysBody3D* pb_snake[MAX_SNAKE];
@@ -57,4 +62,8 @@ public:
 
 	PhysMotor3D* left_wheel;
 	PhysMotor3D* right_wheel;
+
+
+	//Will be used to store all box information that we will spawn in map. Color_Pos_Sensors...
+	p2List<Cube*> Boxes_List;
 };
