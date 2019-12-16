@@ -61,6 +61,9 @@ void PhysVehicle3D::Render()
 	Cube leftHandle(info.leftHandle_size.x, info.leftHandle_size.y, info.leftHandle_size.z);
 	vehicle->getChassisWorldTransform().getOpenGLMatrix(&leftHandle.transform);
 
+	Cylinder handle(info.handle_radius, info.handle_height);
+	vehicle->getChassisWorldTransform().getOpenGLMatrix(&handle.transform);
+
 	btQuaternion q = vehicle->getChassisWorldTransform().getRotation();
 	btVector3 offset(info.chassis_offset.x, info.chassis_offset.y, info.chassis_offset.z);
 	offset = offset.rotate(q.getAxis(), q.getAngle());
@@ -88,6 +91,10 @@ void PhysVehicle3D::Render()
 	btQuaternion q7 = vehicle->getChassisWorldTransform().getRotation();
 	btVector3 offset7(info.leftHandle_offset.x, info.leftHandle_offset.y, info.leftHandle_offset.z);
 	offset7 = offset7.rotate(q7.getAxis(), q7.getAngle());
+
+	btQuaternion q8 = vehicle->getChassisWorldTransform().getRotation();
+	btVector3 offset8(info.handle_offset.x, info.handle_offset.y, info.handle_offset.z);
+	offset8 = offset8.rotate(q8.getAxis(), q8.getAngle());
 
 	chassis.transform.M[12] += offset.getX();
 	chassis.transform.M[13] += offset.getY();
@@ -117,6 +124,10 @@ void PhysVehicle3D::Render()
 	leftHandle.transform.M[13] += offset7.getY();
 	leftHandle.transform.M[14] += offset7.getZ();
 
+	handle.transform.M[12] += offset8.getX();
+	handle.transform.M[13] += offset8.getY();
+	handle.transform.M[14] += offset8.getZ();
+
 	chassis.color = White;
 	cabin.color = White;
 	forwardPart.color = White;
@@ -124,6 +135,7 @@ void PhysVehicle3D::Render()
 	leftPart.color = White;
 	rightHandle.color = Black;
 	leftHandle.color = Black;
+	handle.color = Red;
 
 	chassis.Render();
 	cabin.Render();
@@ -132,6 +144,7 @@ void PhysVehicle3D::Render()
 	leftPart.Render();
 	rightHandle.Render();
 	leftHandle.Render();
+	handle.Render();
 }
 
 // ----------------------------------------------------------------------------

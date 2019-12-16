@@ -38,7 +38,9 @@ struct VehicleInfo
 	vec3 rightHandle_offset;
 	vec3 leftHandle_size;
 	vec3 leftHandle_offset;
-
+	vec3 handle_offset;
+	float handle_radius;
+	float handle_height;
 	float mass;
 	float suspensionStiffness; // default to 5.88 / 10.0 offroad / 50.0 sports car / 200.0 F1 car
 	float suspensionCompression; // default to 0.83

@@ -14,6 +14,8 @@ ModuleSceneIntro::~ModuleSceneIntro()
 // Load assets
 bool ModuleSceneIntro::Start()
 {
+	App->audio->PlayMusic("music/mercadonaremix.ogg");
+
 	LOG("Loading Intro assets");
 	bool ret = true;
 
