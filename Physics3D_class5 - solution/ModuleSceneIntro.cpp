@@ -14,22 +14,35 @@ ModuleSceneIntro::~ModuleSceneIntro()
 // Load assets
 bool ModuleSceneIntro::Start()
 {
+	App->audio->PlayMusic("music/mercadonaremix.ogg");
+
 	LOG("Loading Intro assets");
 	bool ret = true;
 
 	//Road creation
 	Cube road(2, 5, 2);
 	Cube shop1(100, 40, 1);
-	Cube shop2(1, 40, 100);
 	road.color.Set(0.0f, 0.0f, 0.0f);
 	int roadWidth = 20;
 	
 	CreateRect(-10.0f, 0, 0, roadWidth, 50, road, ORIENTATION::NORTH);
 	CreateRect(-55, 0, 100, 110, 1, shop1, ORIENTATION::NORTH);
+
+	
+	//Boxes
+	p2List_item<Cube*>* Box_List;
+	Cube box(5,5,5);
+	box.SetPos(0, 0, 0);
+	box.color = Red;
+	App->physics->AddBody(box, 1.0f);
+
+	
+	//CreateRect(-10.0f, 0, 0, roadWidth, 100, road, ORIENTATION::NORTH);
+	
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
-	shop2.SetPos(0, 0, 0);
-	shop2.Render();
+
+
 	return ret;
 }
 
@@ -53,9 +66,15 @@ update_status ModuleSceneIntro::Update(float dt)
 
 	Cube ground(1000, 2, 1000);
 	ground.SetPos(0, -1, 0);
-	ground.color = Green;
 	ground.Render();
 
+	Cube shop2(100, 40, 1);
+	shop2.SetPos(100, 10, 155);
+	// para techo
+	//shop2.transform.rotate(90, vec3(1, 0, 0));
+	map.PushBack(&shop2);
+	shop2.transform.rotate(90, vec3(0, 1, 0));
+	shop2.Render();
 	//Render Map 
 	for (int i = 0; i < map.Count(); i++)
 	{
@@ -127,3 +146,17 @@ void ModuleSceneIntro::CreateRect(const float& x, const float& y, const float& z
 	}
 }
 
+
+void ModuleSceneIntro::SetBoxes(const float& x, const float& y, const float&z) {
+	Cube* box = new Cube;
+	box->SetPos(x, y, z);
+	box->color.Set(1.0f, 0.0f, 0.0f);
+	Boxes_List.add(box);
+}
+
+void ModuleSceneIntro::CheckBoxes() {
+
+	//This function will check last box that have been triggered and will store data of spawn if user press any key 
+	//WIP
+	//p2List_item<Cube*>* Actual_Cubes = Boxes_List.start;
+}
