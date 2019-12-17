@@ -33,6 +33,7 @@ public:
 	bool CleanUp();
 
 	void CreateRect(const float& x, const float& y, const float& z, const float& width, const float& length, const Cube& cube, ORIENTATION orientation = ORIENTATION::NORTH);
+	void CreateCurve(const float& x, const float& y, const float& z, const float& width, const float& angle_i, const float& angle_f, const Cube& cube, const float& radius);
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
 	//This function will create and set all boxes in map, later will be added to a item list

@@ -20,10 +20,11 @@ bool ModuleSceneIntro::Start()
 	bool ret = true;
 
 	//Road creation
-	Cube road(2, 2, 2);
+	Cube road(2, 4, 2);
 	road.color.Set(0.0f, 1.0f, 0.0f);
 	int roadWidth = 20;
-	
+	int radius = 20;
+
 	//Boxes
 	p2List_item<Cube*>* Box_List;
 	Cube box(5,5,5);
@@ -31,8 +32,24 @@ bool ModuleSceneIntro::Start()
 	box.color = Red;
 	App->physics->AddBody(box, 1.0f);
 
-	
+	//Create circuit
 	CreateRect(-10.0f, 0, 0, roadWidth, 100, road, ORIENTATION::NORTH);
+	CreateCurve(-30.0f, 0, 200, roadWidth, 0, 90, road, radius);
+	CreateRect(-115, 0, 220, roadWidth, 40, road, ORIENTATION::WEST);
+	CreateCurve(-115.0f, 0.0f, 200, roadWidth, 90, 270, road, radius);
+	CreateRect(-115, 0, 160, roadWidth, 30, road, ORIENTATION::WEST);
+	CreateCurve(-60, 0, 140, roadWidth, -90, 90, road, radius);
+	CreateRect(-220, 0, 100, roadWidth, 80, road, ORIENTATION::WEST);
+	CreateCurve(-220.0f, 0.0f, 80, roadWidth, 90, 270, road, radius);
+	CreateRect(-220, 0, 40, roadWidth, 20, road, ORIENTATION::WEST);
+	CreateCurve(-180, 0, 20, roadWidth, -90, 90, road, radius);
+	CreateRect(-220, 0, -20, roadWidth, 20, road, ORIENTATION::WEST);
+	CreateCurve(-220.0f, 0.0f, -40, roadWidth, 90, 270, road, radius);
+	CreateRect(-220, 0, -80, roadWidth, 50, road, ORIENTATION::WEST);
+	CreateCurve(-120.0f, 0, -100, roadWidth, 0, 90, road, radius);
+	CreateRect(-100.0f, 0, -230, roadWidth, 70, road, ORIENTATION::NORTH);
+	CreateCurve(-30.0f, 0, -235, roadWidth, 180, 360, road, radius);
+	CreateRect(-10.0f, 0, -210, roadWidth, 110, road, ORIENTATION::NORTH);
 	
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
@@ -134,6 +151,28 @@ void ModuleSceneIntro::CreateRect(const float& x, const float& y, const float& z
 	}
 }
 
+void ModuleSceneIntro::CreateCurve(const float& x, const float& y, const float& z, const float& width, const float& angle_i, const float& angle_f, const Cube& cube, const float& radius)
+{
+	Cube* c1 = nullptr;
+	Cube* c2 = nullptr;
+	PhysBody3D* curve1 = nullptr;
+	PhysBody3D* curve2 = nullptr;
+
+	for (int i = angle_i; i <= angle_f; i = i + cube.size.x * 5) {
+		c1 = new Cube(cube);
+		c2 = new Cube(cube);
+
+		c1->SetPos(x + radius * cos(i * 3.1415 / 180), y, z + radius * sin(i * 3.1415 / 180));
+		c2->SetPos(x + (radius + width) * cos(i * 3.1415 / 180), y, z + (radius + width) * sin(i * 3.1415 / 180));
+
+		curve1 = App->physics->AddBody(*c1, 0.0F);
+		curve2 = App->physics->AddBody(*c2, 0.0F);
+
+		map.PushBack(c1);
+		map.PushBack(c2);
+	}
+
+}
 
 void ModuleSceneIntro::SetBoxes(const float& x, const float& y, const float&z) {
 	Cube* box = new Cube;
