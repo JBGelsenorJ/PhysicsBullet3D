@@ -132,6 +132,12 @@ update_status ModulePlayer::Update(float dt)
 {
 	turn = acceleration = brake = 0.0f;
 
+	if (App->input->GetKey(SDL_SCANCODE_F1)) 
+	{
+		vehicle->vehicle->getRigidBody()->setLinearVelocity(btVector3(0, 0, 0));
+		vehicle->SetPos(0, 5, 10);
+	}
+
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
 		if (vehicle->GetKmh() >= 150)
