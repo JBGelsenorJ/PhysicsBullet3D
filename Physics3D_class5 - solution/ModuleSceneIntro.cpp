@@ -33,14 +33,6 @@ bool ModuleSceneIntro::Start()
 	
 	CreateRect(-10.0f, 0, 0, roadWidth, 50, road, ORIENTATION::NORTH);
 	CreateRect(-55, 0, 100, 110, 1, shop1, ORIENTATION::NORTH);
-	
-	
-	//Boxes
-	p2List_item<Cube*>* Box_List;
-	Cube box(5,5,5);
-	box.SetPos(0, 0, 0);
-	box.color = Red;
-	App->physics->AddBody(box, 1.0f);
 	*/
 
 	//Create circuit
@@ -59,12 +51,17 @@ bool ModuleSceneIntro::Start()
 	CreateRect(-220, 0, -80, roadWidth, 50, road, ORIENTATION::WEST);
 	CreateCurve(-120.0f, 0, -100, roadWidth, 0, 90, road, radius);
 	CreateRect(-100.0f, 0, -245, roadWidth, 70, road, ORIENTATION::NORTH);
-	//CreateCurve(-30.0f, 0, -235, roadWidth, 180, 360, road, radius);
+	CreateCurve(-30.0f, 0, -235, roadWidth, 180, 360, road, radius);
 	CreateRect(-10.0f, 0, -210, roadWidth, 110, road, ORIENTATION::NORTH);
 	
+	SetBoxes(0.0f, 0.0f, 0.0f);
+	SetBoxes(0.0f, 0.0f, 18.0f);
+	SetBoxes(0.0f, 0.0f, 28.0f);
+
+
+
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
-
 
 	return ret;
 }
@@ -196,14 +193,18 @@ void ModuleSceneIntro::CreateCurve(const float& x, const float& y, const float& 
 
 void ModuleSceneIntro::SetBoxes(const float& x, const float& y, const float&z) {
 	Cube* box = new Cube;
+	PhysBody3D* phys = nullptr;
+
 	box->SetPos(x, y, z);
 	box->color.Set(1.0f, 0.0f, 0.0f);
 	Boxes_List.add(box);
+
+	phys = App->physics->AddBody(*box, 0.0F);
+	map.PushBack(box);
 }
 
 void ModuleSceneIntro::CheckBoxes() {
 
 	//This function will check last box that have been triggered and will store data of spawn if user press any key 
-	//WIP
-	//p2List_item<Cube*>* Actual_Cubes = Boxes_List.start;
+	//p2List_item<Cube*> Actual_Cubes = Boxes_List;
 }
