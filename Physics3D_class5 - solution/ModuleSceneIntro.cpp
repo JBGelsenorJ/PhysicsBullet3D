@@ -3,12 +3,20 @@
 #include "ModuleSceneIntro.h"
 #include "Primitive.h"
 #include "PhysBody3D.h"
+#include "PhysVehicle3D.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
+	//Initialize hinge elements
+	bodyA = nullptr;
+	bodyB = nullptr;
+	hinge = nullptr;
+	axis = Cube(1, 3, 1);
+	helix = Cube(7, 2, 1);
+
+	//Initialize road variables
 	road.size.Set(2, 4, 2);
 	road.color.Set(0.0f, 1.0f, 0.0f);
-
 	roadWidth = 20;
 	radius = 20;
 }
@@ -61,12 +69,20 @@ bool ModuleSceneIntro::Start()
 	//Create CheckPoints
 	//CreateCheckPoint({0.0f,0.0f,40.0f}, 90.0f);
 
-
 	//Create Boxes
 	SetBoxes(0.0f, 10.0f, 0.0f);
 	
+	//Hinges
+	axis.SetPos(0, 1, 40);
+	axis.color = White;
+	bodyA = App->physics->AddBody(axis, 0.0f);
 
+	helix.SetPos(10, 3.5, 50);
+	helix.color = Red;
+	bodyB = App->physics->AddBody(helix, 4.0f);
 
+	hinge = App->physics->AddConstraintHinge(*bodyA, *bodyB, vec3(0, 0, 0), vec3(5, 0, 0), vec3(0, 1, 0), vec3(0, 1, 0), true);
+	hinge->enableAngularMotor(true, 4.0f, INFINITE);
 
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
@@ -107,6 +123,14 @@ update_status ModuleSceneIntro::Update(float dt)
 	{
 		map[i]->Render();
 	}
+
+	//Render Hinges
+	axis.Render();
+	helix.Render();
+
+	mat4x4 transform;
+	bodyB->GetTransform(transform.M);
+	helix.transform = transform;
 
 	return UPDATE_CONTINUE;
 }

@@ -3,6 +3,7 @@
 #include "p2DynArray.h"
 #include "Globals.h"
 #include "Primitive.h"
+#include "Bullet/include/btBulletDynamicsCommon.h"
 
 #define MAX_SNAKE 2
 
@@ -64,9 +65,15 @@ public:
 	PhysMotor3D* left_wheel;
 	PhysMotor3D* right_wheel;
 
-
 	//Will be used to store all box information that we will spawn in map. Color_Pos_Sensors...
 	p2List<Cube*> Boxes_List;
+
+	//Hinges
+	PhysBody3D* bodyA = nullptr;
+	Cube axis;
+	PhysBody3D* bodyB;
+	Cube helix;
+	btHingeConstraint* hinge = nullptr;
 
 private:
 
