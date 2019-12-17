@@ -90,14 +90,11 @@ update_status ModuleSceneIntro::Update(float dt)
 	ground.SetPos(0, -1, 0);
 	ground.Render();
 
-	/*Cube shop2(100, 40, 1);
-	shop2.SetPos(100, 10, 155);
+	Cube shop2(205, 200, 1);
+	shop2.SetPos(-90, 20, -305);
 	// para techo
-	//shop2.transform.rotate(90, vec3(1, 0, 0));
-	map.PushBack(&shop2);
-	shop2.transform.rotate(90, vec3(0, 1, 0));
+	shop2.transform.rotate(90, vec3(1, 0, 0));
 	shop2.Render();
-	*/
 
 	//Render Map 
 	for (int i = 0; i < map.Count(); i++)
