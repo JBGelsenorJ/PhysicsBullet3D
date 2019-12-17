@@ -25,23 +25,22 @@ bool ModuleSceneIntro::Start()
 	int roadWidth = 20;
 	int radius = 20;
 
-	/*
-	Cube road(2, 5, 2);
+
 	Cube shop1(100, 40, 1);
-	road.color.Set(0.0f, 0.0f, 0.0f);
-	int roadWidth = 20;
-	
-	CreateRect(-10.0f, 0, 0, roadWidth, 50, road, ORIENTATION::NORTH);
-	CreateRect(-55, 0, 100, 110, 1, shop1, ORIENTATION::NORTH);
-	
-	
+	Cube shelves(20, 15, 8);
+	shelves.color.Set(0.6f, 0.0f, 0.0f);
+
+	CreateRect(-145, 0, -205, 110, 1, shop1, ORIENTATION::NORTH);
+	CreateRect(-145, 0, -235, 30, 20, shelves, ORIENTATION::SOUTH);
+	CreateRect(-145, 0, -215, 30, 20, shelves, ORIENTATION::SOUTH);
+	CreateRect(-65, 0, -235, 30, 20, shelves, ORIENTATION::SOUTH);
+	CreateRect(-65, 0, -215, 30, 20, shelves, ORIENTATION::SOUTH);
 	//Boxes
 	p2List_item<Cube*>* Box_List;
 	Cube box(5,5,5);
 	box.SetPos(0, 0, 0);
 	box.color = Red;
 	App->physics->AddBody(box, 1.0f);
-	*/
 
 	//Create circuit
 	CreateRect(-10.0f, 0, 0, roadWidth, 100, road, ORIENTATION::NORTH);
@@ -58,7 +57,7 @@ bool ModuleSceneIntro::Start()
 	CreateCurve(-220.0f, 0.0f, -40, roadWidth, 90, 270, road, radius);
 	CreateRect(-220, 0, -80, roadWidth, 50, road, ORIENTATION::WEST);
 	CreateCurve(-120.0f, 0, -100, roadWidth, 0, 90, road, radius);
-	CreateRect(-100.0f, 0, -245, roadWidth, 70, road, ORIENTATION::NORTH);
+	CreateRect(-100.0f, 0, -200, roadWidth, 50, road, ORIENTATION::NORTH);
 	//CreateCurve(-30.0f, 0, -235, roadWidth, 180, 360, road, radius);
 	CreateRect(-10.0f, 0, -210, roadWidth, 110, road, ORIENTATION::NORTH);
 	
