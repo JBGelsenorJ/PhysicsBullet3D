@@ -28,11 +28,8 @@ bool ModuleSceneIntro::Start()
 
 	Cube shop1(100, 40, 1);
 	road.color.Set(0.0f, 0.0f, 0.0f);
-	int roadWidth = 20;
 	
 	CreateRect(-10.0f, 0, 0, roadWidth, 50, road, ORIENTATION::NORTH);
-	CreateRect(-55, 0, 100, 110, 1, shop1, ORIENTATION::NORTH);
-	*/
 	Cube shelves(20, 15, 8);
 	shelves.color.Set(0.6f, 0.0f, 0.0f);
 
@@ -63,8 +60,7 @@ bool ModuleSceneIntro::Start()
 	CreateCurve(-220.0f, 0.0f, -40, roadWidth, 90, 270, road, radius);
 	CreateRect(-220, 0, -80, roadWidth, 50, road, ORIENTATION::WEST);
 	CreateCurve(-120.0f, 0, -100, roadWidth, 0, 90, road, radius);
-	CreateRect(-100.0f, 0, -245, roadWidth, 70, road, ORIENTATION::NORTH);
-	CreateCurve(-30.0f, 0, -235, roadWidth, 180, 360, road, radius);
+	
 
 	CreateRect(-100.0f, 0, -200, roadWidth, 50, road, ORIENTATION::NORTH);
 	//CreateCurve(-30.0f, 0, -235, roadWidth, 180, 360, road, radius);
