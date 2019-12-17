@@ -6,10 +6,17 @@
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
+	road.size.Set(2, 4, 2);
+	road.color.Set(0.0f, 1.0f, 0.0f);
+
+	roadWidth = 20;
+	radius = 20;
 }
 
 ModuleSceneIntro::~ModuleSceneIntro()
-{}
+{
+
+}
 
 // Load assets
 bool ModuleSceneIntro::Start()
@@ -18,12 +25,6 @@ bool ModuleSceneIntro::Start()
 
 	LOG("Loading Intro assets");
 	bool ret = true;
-
-	//Road creation
-	Cube road(2, 4, 2);
-	road.color.Set(0.0f, 1.0f, 0.0f);
-	int roadWidth = 20;
-	int radius = 20;
 
 
 	Cube shop1(100, 40, 1);
@@ -38,12 +39,6 @@ bool ModuleSceneIntro::Start()
 	CreateRect(-145, 0, -215, 30, 20, shelves, ORIENTATION::SOUTH);
 	CreateRect(-65, 0, -235, 30, 20, shelves, ORIENTATION::SOUTH);
 	CreateRect(-65, 0, -215, 30, 20, shelves, ORIENTATION::SOUTH);
-	//Boxes
-	p2List_item<Cube*>* Box_List;
-	Cube box(5,5,5);
-	box.SetPos(0, 0, 0);
-	box.color = Red;
-	App->physics->AddBody(box, 1.0f);
 
 	//Create circuit
 	CreateRect(-10.0f, 0, 0, roadWidth, 100, road, ORIENTATION::NORTH);
@@ -60,15 +55,16 @@ bool ModuleSceneIntro::Start()
 	CreateCurve(-220.0f, 0.0f, -40, roadWidth, 90, 270, road, radius);
 	CreateRect(-220, 0, -80, roadWidth, 50, road, ORIENTATION::WEST);
 	CreateCurve(-120.0f, 0, -100, roadWidth, 0, 90, road, radius);
-	
-
 	CreateRect(-100.0f, 0, -200, roadWidth, 50, road, ORIENTATION::NORTH);
-	//CreateCurve(-30.0f, 0, -235, roadWidth, 180, 360, road, radius);
 	CreateRect(-10.0f, 0, -210, roadWidth, 110, road, ORIENTATION::NORTH);
+
+	//Create CheckPoints
+	//CreateCheckPoint({0.0f,0.0f,40.0f}, 90.0f);
+
+
+	//Create Boxes
+	SetBoxes(0.0f, 10.0f, 0.0f);
 	
-	SetBoxes(0.0f, 0.0f, 0.0f);
-	SetBoxes(0.0f, 0.0f, 18.0f);
-	SetBoxes(0.0f, 0.0f, 28.0f);
 
 
 
@@ -205,6 +201,7 @@ void ModuleSceneIntro::SetBoxes(const float& x, const float& y, const float&z) {
 	PhysBody3D* phys = nullptr;
 
 	box->SetPos(x, y, z);
+	box->size.Set(2.0f, 2.0f, 2.0f);
 	box->color.Set(1.0f, 0.0f, 0.0f);
 	Boxes_List.add(box);
 
@@ -216,4 +213,18 @@ void ModuleSceneIntro::CheckBoxes() {
 
 	//This function will check last box that have been triggered and will store data of spawn if user press any key 
 	//p2List_item<Cube*> Actual_Cubes = Boxes_List;
+
+	//TODO: SHOULD READ EACH CHECKPOINT STORED
+}
+
+void ModuleSceneIntro::CreateCheckPoint(const vec3 Position, float angle) {
+
+	Cube Sensor;
+	Sensor.size.Set(2.0f, 2.0f, roadWidth);
+	Sensor.SetPos(Position.x, Position.y, Position.z);
+	Sensor.SetRotation(angle, { 0, 1, 0 });
+
+	PhysBody3D* PhysBodySensor = App->physics->AddBody(Sensor, 0.0f);
+
+	//TODO: MAKE AS SENSOR AND CANT COLLIDE
 }

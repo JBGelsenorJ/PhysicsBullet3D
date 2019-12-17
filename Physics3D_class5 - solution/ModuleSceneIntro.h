@@ -39,7 +39,7 @@ public:
 	//This function will create and set all boxes in map, later will be added to a item list
 	void SetBoxes(const float& x, const float& y, const float& z);
 	void CheckBoxes();
-
+	void CreateCheckPoint(const vec3 Position, float angle);
 
 public:
 	/*
@@ -67,4 +67,10 @@ public:
 
 	//Will be used to store all box information that we will spawn in map. Color_Pos_Sensors...
 	p2List<Cube*> Boxes_List;
+
+private:
+
+	Cube road;
+	int roadWidth;
+	int radius;
 };
