@@ -58,12 +58,10 @@ bool ModuleSceneIntro::Start()
 	CreateCurve(-220.0f, 0.0f, -40, roadWidth, 90, 270, road, radius);
 	CreateRect(-220, 0, -80, roadWidth, 50, road, ORIENTATION::WEST);
 	CreateCurve(-120.0f, 0, -100, roadWidth, 0, 90, road, radius);
-	CreateRect(-100.0f, 0, -230, roadWidth, 70, road, ORIENTATION::NORTH);
-	CreateCurve(-30.0f, 0, -235, roadWidth, 180, 360, road, radius);
+	CreateRect(-100.0f, 0, -245, roadWidth, 70, road, ORIENTATION::NORTH);
+	//CreateCurve(-30.0f, 0, -235, roadWidth, 180, 360, road, radius);
 	CreateRect(-10.0f, 0, -210, roadWidth, 110, road, ORIENTATION::NORTH);
-
-	//CreateRect(-10.0f, 0, 0, roadWidth, 100, road, ORIENTATION::NORTH);
-
+	
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
