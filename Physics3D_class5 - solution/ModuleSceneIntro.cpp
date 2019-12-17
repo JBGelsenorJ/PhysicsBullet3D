@@ -11,6 +11,7 @@ ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Modul
 	bodyA = nullptr;
 	bodyB = nullptr;
 	hinge = nullptr;
+
 	axis = Cube(1, 3, 1);
 	helix = Cube(7, 2, 1);
 
@@ -19,6 +20,11 @@ ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Modul
 	road.color.Set(0.0f, 1.0f, 0.0f);
 	roadWidth = 20;
 	radius = 20;
+
+	MercaWall1pb = nullptr;
+	MercaWall2pb = nullptr;
+	MercaWall1 = Cube(420, 40, 1);
+	MercaWall2 = Cube(100, 40, 1);
 }
 
 ModuleSceneIntro::~ModuleSceneIntro()
@@ -35,14 +41,20 @@ bool ModuleSceneIntro::Start()
 	bool ret = true;
 
 
-	Cube shop1(100, 40, 1);
+	Cube shop1(80, 40, 1);
+	Cube shop3(250, 40, 1);
 	road.color.Set(0.0f, 0.0f, 0.0f);
+
+	MercaWall1.SetPos(-185, 0, -455);
+	MercaWall1.transform.rotate(90, vec3(0, 1, 0));
+	MercaWall1pb = App->physics->AddBody(MercaWall1, 0.0f);
 	
 	CreateRect(-10.0f, 0, 0, roadWidth, 50, road, ORIENTATION::NORTH);
-	Cube shelves(20, 15, 8);
+	Cube shelves(20, 25, 8);
 	shelves.color.Set(0.6f, 0.0f, 0.0f);
 
 	CreateRect(-145, 0, -205, 110, 1, shop1, ORIENTATION::NORTH);
+	CreateRect(-145, 0, -605, 110, 1, shop3, ORIENTATION::NORTH);
 	CreateRect(-145, 0, -235, 30, 20, shelves, ORIENTATION::SOUTH);
 	CreateRect(-145, 0, -215, 30, 20, shelves, ORIENTATION::SOUTH);
 	CreateRect(-65, 0, -235, 30, 20, shelves, ORIENTATION::SOUTH);
@@ -104,20 +116,17 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
-	/*Plane p(0, 1, 0, 0);
-	p.axis = true;
-	p.Render();*/
 
-	Cube ground(1000, 2, 1000);
+	Cube ground(2000, 1, 2000);
 	ground.SetPos(0, -1, 0);
 	ground.Render();
 
-	Cube shop2(205, 200, 1);
-	shop2.SetPos(-90, 20, -305);
-	// para techo
+	Cube shop2(205, 400, 1);
+	shop2.SetPos(-90, 20, -405);
+	// roof
 	shop2.transform.rotate(90, vec3(1, 0, 0));
 	shop2.Render();
-
+	MercaWall1.Render();
 	//Render Map 
 	for (int i = 0; i < map.Count(); i++)
 	{

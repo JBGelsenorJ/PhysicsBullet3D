@@ -68,6 +68,12 @@ public:
 	//Will be used to store all box information that we will spawn in map. Color_Pos_Sensors...
 	p2List<Cube*> Boxes_List;
 
+	Cube MercaWall1;
+	PhysBody3D* MercaWall1pb = nullptr;
+	Cube MercaWall2;
+	PhysBody3D* MercaWall2pb = nullptr;
+
+
 	//Hinges
 	PhysBody3D* bodyA = nullptr;
 	Cube axis;
