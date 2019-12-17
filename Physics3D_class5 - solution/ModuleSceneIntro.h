@@ -38,7 +38,7 @@ public:
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
 	//This function will create and set all boxes in map, later will be added to a item list
-	void SetBoxes(const float& x, const float& y, const float& z);
+	void SetBoxes(const vec3);
 	void CheckBoxes();
 	void CreateCheckPoint(const vec3 Position, float angle);
 
@@ -78,6 +78,7 @@ public:
 private:
 
 	Cube road;
+	Sphere CheckPointLight;
 	int roadWidth;
 	int radius;
 };

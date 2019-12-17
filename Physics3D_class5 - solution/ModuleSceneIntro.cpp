@@ -67,10 +67,11 @@ bool ModuleSceneIntro::Start()
 	CreateRect(-10.0f, 0, -210, roadWidth, 110, road, ORIENTATION::NORTH);
 
 	//Create CheckPoints
-	//CreateCheckPoint({0.0f,0.0f,40.0f}, 90.0f);
+	CreateCheckPoint({0.0f,0.0f,20.0f}, 90.0f);
+	CreateCheckPoint({ 0.0f, 0.0f, 120.0f }, 90.0f);
 
 	//Create Boxes
-	SetBoxes(0.0f, 10.0f, 0.0f);
+	SetBoxes({0.0f,10.0f,0.0f});
 	
 	//Hinges
 	axis.SetPos(0, 1, 40);
@@ -104,10 +105,6 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
-	/*Plane p(0, 1, 0, 0);
-	p.axis = true;
-	p.Render();*/
-
 	Cube ground(1000, 2, 1000);
 	ground.SetPos(0, -1, 0);
 	ground.Render();
@@ -127,10 +124,13 @@ update_status ModuleSceneIntro::Update(float dt)
 	//Render Hinges
 	axis.Render();
 	helix.Render();
+	CheckPointLight.Render();
 
 	mat4x4 transform;
 	bodyB->GetTransform(transform.M);
 	helix.transform = transform;
+
+
 
 	return UPDATE_CONTINUE;
 }
@@ -220,11 +220,11 @@ void ModuleSceneIntro::CreateCurve(const float& x, const float& y, const float& 
 
 }
 
-void ModuleSceneIntro::SetBoxes(const float& x, const float& y, const float&z) {
+void ModuleSceneIntro::SetBoxes(const vec3 Position) {
 	Cube* box = new Cube;
 	PhysBody3D* phys = nullptr;
 
-	box->SetPos(x, y, z);
+	box->SetPos(Position.x, Position.y, Position.z);
 	box->size.Set(2.0f, 2.0f, 2.0f);
 	box->color.Set(1.0f, 0.0f, 0.0f);
 	Boxes_List.add(box);
@@ -244,11 +244,17 @@ void ModuleSceneIntro::CheckBoxes() {
 void ModuleSceneIntro::CreateCheckPoint(const vec3 Position, float angle) {
 
 	Cube Sensor;
-	Sensor.size.Set(2.0f, 2.0f, roadWidth);
+	Sensor.size.Set(4.0f, 4.0f, roadWidth-5.0f);
 	Sensor.SetPos(Position.x, Position.y, Position.z);
 	Sensor.SetRotation(angle, { 0, 1, 0 });
 
-	PhysBody3D* PhysBodySensor = App->physics->AddBody(Sensor, 0.0f);
+	PhysBody3D* PhysBodySensor = App->physics->AddBody(Sensor, this, 0.0f, true);
+
+	Sphere CheckPointLight;
+	CheckPointLight.radius = 1.0f;
+	CheckPointLight.color = White;
+	CheckPointLight.SetPos(Position.x, Position.y + 10.0f, Position.z);
+
 
 	//TODO: MAKE AS SENSOR AND CANT COLLIDE
 }
