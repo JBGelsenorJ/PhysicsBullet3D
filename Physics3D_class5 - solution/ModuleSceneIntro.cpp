@@ -25,12 +25,23 @@ bool ModuleSceneIntro::Start()
 	int roadWidth = 20;
 	int radius = 20;
 
+	/*
+	Cube road(2, 5, 2);
+	Cube shop1(100, 40, 1);
+	road.color.Set(0.0f, 0.0f, 0.0f);
+	int roadWidth = 20;
+	
+	CreateRect(-10.0f, 0, 0, roadWidth, 50, road, ORIENTATION::NORTH);
+	CreateRect(-55, 0, 100, 110, 1, shop1, ORIENTATION::NORTH);
+	
+	
 	//Boxes
 	p2List_item<Cube*>* Box_List;
 	Cube box(5,5,5);
 	box.SetPos(0, 0, 0);
 	box.color = Red;
 	App->physics->AddBody(box, 1.0f);
+	*/
 
 	//Create circuit
 	CreateRect(-10.0f, 0, 0, roadWidth, 100, road, ORIENTATION::NORTH);
@@ -50,9 +61,12 @@ bool ModuleSceneIntro::Start()
 	CreateRect(-100.0f, 0, -230, roadWidth, 70, road, ORIENTATION::NORTH);
 	CreateCurve(-30.0f, 0, -235, roadWidth, 180, 360, road, radius);
 	CreateRect(-10.0f, 0, -210, roadWidth, 110, road, ORIENTATION::NORTH);
-	
+
+	//CreateRect(-10.0f, 0, 0, roadWidth, 100, road, ORIENTATION::NORTH);
+
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
+
 
 	return ret;
 }
@@ -79,6 +93,14 @@ update_status ModuleSceneIntro::Update(float dt)
 	ground.SetPos(0, -1, 0);
 	ground.Render();
 
+	/*Cube shop2(100, 40, 1);
+	shop2.SetPos(100, 10, 155);
+	// para techo
+	//shop2.transform.rotate(90, vec3(1, 0, 0));
+	map.PushBack(&shop2);
+	shop2.transform.rotate(90, vec3(0, 1, 0));
+	shop2.Render();
+	*/
 
 	//Render Map 
 	for (int i = 0; i < map.Count(); i++)
