@@ -177,7 +177,7 @@ update_status ModulePlayer::Update(float dt)
 	vehicle->Brake(brake);
 
 	vehicle->Render();
-
+	
 	char title[80];
 	sprintf_s(title, "%.1f Km/h", vehicle->GetKmh());
 	App->window->SetTitle(title);
@@ -205,5 +205,8 @@ void ModulePlayer::Nitro()
 
 }
 
+void ModulePlayer::RespawnVehicle(const PhysBody3D* PhysBodyInfo) {
+	//TODO: WILL SET ALL INFO RETRIEVED BY PHYSBODY PARAMETER INTO VEHICLE SETTINGS
 
-
+	//VEHICLE SET POS, SET ROTATION...
+}

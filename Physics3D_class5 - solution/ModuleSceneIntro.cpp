@@ -153,7 +153,15 @@ update_status ModuleSceneIntro::Update(float dt)
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
 	if (body1->is_sensor == true) {
-		LOG("HOLA ESTOY CHOCANDO");
+		
+		for (uint i = 0; i < SavePoints.Count(); i++){
+			if (body1 == SavePoints[i]) {
+				CheckPoints_List[i].color = Red;
+				body1->is_sensor = false;
+			}
+			if (body1 == SavePoints[SavePoints.Count() - 1]) break;	
+		
+		}
 	}
 }
 
