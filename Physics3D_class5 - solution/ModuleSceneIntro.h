@@ -67,7 +67,10 @@ public:
 	PhysBody3D* MercaWall1pb = nullptr;
 	Cube MercaWall2;
 	PhysBody3D* MercaWall2pb = nullptr;
-
+	Cube MercaWall3;
+	PhysBody3D* MercaWall3pb = nullptr;
+	Cube MercaWall4;
+	PhysBody3D* MercaWall4pb = nullptr;
 
 	//Hinges
 	PhysBody3D* bodyA = nullptr;
