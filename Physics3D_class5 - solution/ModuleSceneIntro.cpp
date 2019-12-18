@@ -287,10 +287,12 @@ void ModuleSceneIntro::CreateCheckPoint(const vec3 Position, float angle) {
 void ModuleSceneIntro::CreateHinge(Cube helix, vec3 setpos1, Color helixc, Cube axis, vec3 setpos2, Color axisc,PhysBody3D* bodyA, PhysBody3D* bodyB) {
 
 	axis.SetPos(setpos1.x, setpos1.y, setpos1.z);
+	axis.color = axisc;
 	bodyA = App->physics->AddBody(axis, 0.0f);
 
 
 	helix.SetPos(setpos2.x, setpos2.y, setpos2.z);
+	helix.color = helixc;
 	bodyB = App->physics->AddBody(helix, 4.0f);
 
 	hinge = App->physics->AddConstraintHinge(*bodyA, *bodyB, vec3(0, 0, 0), vec3(5, 0, 0), vec3(0, 1, 0), vec3(0, 1, 0), true);
