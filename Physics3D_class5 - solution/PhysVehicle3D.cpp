@@ -26,7 +26,7 @@ void PhysVehicle3D::Render()
 {
 	Cylinder wheel;
 
-	wheel.color = Blue;
+	wheel.color = Orange;
 
 	for(int i = 0; i < vehicle->getNumWheels(); ++i)
 	{
@@ -128,14 +128,14 @@ void PhysVehicle3D::Render()
 	handle.transform.M[13] += offset8.getY();
 	handle.transform.M[14] += offset8.getZ();
 
-	chassis.color = White;
-	cabin.color = White;
-	forwardPart.color = White;
-	rightPart.color = White;
-	leftPart.color = White;
-	rightHandle.color = Black;
-	leftHandle.color = Black;
-	handle.color = Red;
+	chassis.color = LimeGreen;
+	cabin.color = LimeGreen;
+	forwardPart.color = LimeGreen;
+	rightPart.color = LimeGreen;
+	leftPart.color = LimeGreen;
+	rightHandle.color = White;
+	leftHandle.color = White;
+	handle.color = Green;
 
 	chassis.Render();
 	cabin.Render();

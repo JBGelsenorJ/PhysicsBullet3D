@@ -17,7 +17,7 @@ ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Modul
 
 	//Initialize road variables
 	road.size.Set(2, 4, 2);
-	road.color.Set(0.0f, 1.0f, 0.0f);
+	road.color.Set(0.3f, 0.32f, 0.4f);
 	roadWidth = 20;
 	radius = 20;
 
@@ -38,19 +38,18 @@ ModuleSceneIntro::~ModuleSceneIntro()
 // Load assets
 bool ModuleSceneIntro::Start()
 {
-	/*App->audio->PlayMusic("music/mercadonaremix.ogg");*/
+	App->audio->PlayMusic("music/mercadonaremix.ogg");
 
 	LOG("Loading Intro assets");
 	bool ret = true;
 
 
 	Cube shop1(100, 40, 1);
-	road.color.Set(0.0f, 0.0f, 0.0f);
 
 	MercaWall1.SetPos(-185, 0, -405);
 	MercaWall1.transform.rotate(90, vec3(0, 1, 0));
 	MercaWall1pb = App->physics->AddBody(MercaWall1, 0.0f);
-	
+
 	MercaWall2.SetPos(0, 0, -405);
 	MercaWall2.transform.rotate(90, vec3(0, 1, 0));
 	MercaWall2pb = App->physics->AddBody(MercaWall2, 0.0f);
@@ -70,7 +69,7 @@ bool ModuleSceneIntro::Start()
 	CreateRect(-65, 0, -215, 30, 20, shelves, ORIENTATION::SOUTH);
 
 	//Create circuit
-	//CreateRect(-10.0f, 0, 0, roadWidth, 100, road, ORIENTATION::NORTH);
+	CreateRect(-10.0f, 0, 0, roadWidth, 100, road, ORIENTATION::NORTH);
 	CreateCurve(-30.0f, 0, 200, roadWidth, 0, 90, road, radius);
 	CreateRect(-115, 0, 220, roadWidth, 40, road, ORIENTATION::WEST);
 	CreateCurve(-115.0f, 0.0f, 200, roadWidth, 90, 270, road, radius);
@@ -88,19 +87,29 @@ bool ModuleSceneIntro::Start()
 	CreateRect(-10.0f, 0, -210, roadWidth, 110, road, ORIENTATION::NORTH);
 
 	//Create CheckPoints
-	CreateCheckPoint({0.0f,0.0f,20.0f}, 90.0f);
+	CreateCheckPoint({ 0.0f,0.0f,20.0f }, 90.0f);
 	CreateCheckPoint({ 0.0f, 0.0f, 120.0f }, 90.0f);
 
 	//Create Boxes
-	SetBoxes({0.0f,10.0f,0.0f});
-	
+	SetBoxes({ 0.0f,10.0f,0.0f });
+
 	//Hinges
 	CreateHinge({ 0.0f, 1.0f, 40.0f });
 	CreateHinge({ 0.0f, 1.0f, 100.0f });
 	CreateHinge({ 0.0f, 1.0f, 160.0f });
 	CreateHinge({ -8.0f, 1.0f, 220.0f });
 	CreateHinge({ -68.0f, 1.0f, 230.0f });
-
+	CreateHinge({-118.0f, 1.0f, 170.0f});
+	CreateHinge({ -68.0f, 1.0f, 170.0f });
+	CreateHinge({ -32.0f, 1.0f, 150.0f });
+	CreateHinge({ -60.0f, 1.0f, 110.0f });
+	CreateHinge({ -120.0f, 1.0f, 110.0f });
+	CreateHinge({ -180.0f, 1.0f, 110.0f });
+	CreateHinge({ -250.0f, 1.0f, 80.0f });
+	CreateHinge({ -180.0f, 1.0f, 50.0f });
+	CreateHinge({ -200.0f, 1.0f, -10.0f });
+	CreateHinge({ -100.0f, 1.0f, -10.0f });
+	
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
@@ -297,7 +306,7 @@ void ModuleSceneIntro::CreateHinge(vec3 Position) {
 
 	Cube axis;
 	axis.size.Set(1, 3, 1);
-	axis.color = White;
+	axis.color = Black;
 	axis.SetPos(Position.x, Position.y, Position.z);
 	PhysBody3D* bodyA = App->physics->AddBody(axis, 0.0f);
 
