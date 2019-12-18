@@ -43,13 +43,6 @@ public:
 	void CreateCheckPoint(const vec3 Position, float angle);
 
 public:
-	/*
-	PhysBody3D* pb_snake[MAX_SNAKE];
-	Sphere s_snake[MAX_SNAKE];
-
-	PhysBody3D* pb_snake2[MAX_SNAKE];
-	Sphere s_snake2[MAX_SNAKE];
-	*/
 
 	p2DynArray <Cube*> map;
 
@@ -66,7 +59,9 @@ public:
 	PhysMotor3D* right_wheel;
 
 	//Will be used to store all box information that we will spawn in map. Color_Pos_Sensors...
-	p2List<Cube*> Boxes_List;
+	p2List<Cube*> Boxes_List;	
+	p2DynArray<Sphere> CheckPoints_List;
+	p2DynArray<PhysBody3D*> SavePoints;
 
 	Cube MercaWall1;
 	PhysBody3D* MercaWall1pb = nullptr;
