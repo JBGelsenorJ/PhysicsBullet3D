@@ -70,7 +70,7 @@ bool ModuleSceneIntro::Start()
 	CreateRect(-65, 0, -215, 30, 20, shelves, ORIENTATION::SOUTH);
 
 	//Create circuit
-	CreateRect(-10.0f, 0, 0, roadWidth, 100, road, ORIENTATION::NORTH);
+	//CreateRect(-10.0f, 0, 0, roadWidth, 100, road, ORIENTATION::NORTH);
 	CreateCurve(-30.0f, 0, 200, roadWidth, 0, 90, road, radius);
 	CreateRect(-115, 0, 220, roadWidth, 40, road, ORIENTATION::WEST);
 	CreateCurve(-115.0f, 0.0f, 200, roadWidth, 90, 270, road, radius);
@@ -99,7 +99,11 @@ bool ModuleSceneIntro::Start()
 	axis.color = Red;
 	CreateHinge(helix, vec3(0, 1, 40), Red, axis, vec3(10, 3.5, 50), White, bodyA, bodyB);
 	CreateHinge(helix, vec3(0, 1, 100), Red, axis, vec3(10, 3.5, 60), White,bodyA, bodyB);
-
+	CreateHinge(helix, vec3(0, 1, 160), Red, axis, vec3(10, 3.5, 60), White, bodyA, bodyB);
+	CreateHinge(helix, vec3(-8, 1, 220), Red, axis, vec3(10, 3.5, 60), White, bodyA, bodyB);
+	CreateHinge(helix, vec3(-68, 1, 230), Red, axis, vec3(10, 3.5, 60), White, bodyA, bodyB);
+	CreateHinge(helix, vec3(-118, 1, 170), Red, axis, vec3(10, 3.5, 60), White, bodyA, bodyB);
+	CreateHinge(helix, vec3(-68, 1, 170), Red, axis, vec3(10, 3.5, 60), White, bodyA, bodyB);
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
