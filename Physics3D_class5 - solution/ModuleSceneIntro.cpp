@@ -23,8 +23,11 @@ ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Modul
 
 	MercaWall1pb = nullptr;
 	MercaWall2pb = nullptr;
-	MercaWall1 = Cube(420, 40, 1);
-	MercaWall2 = Cube(100, 40, 1);
+	MercaWall3pb = nullptr;
+	MercaWall4pb = nullptr;
+	MercaWall1 = Cube(400, 40, 1);
+	MercaWall2 = Cube(400, 40, 1);
+	MercaWall3 = Cube(210, 40, 1);
 }
 
 ModuleSceneIntro::~ModuleSceneIntro()
@@ -35,26 +38,32 @@ ModuleSceneIntro::~ModuleSceneIntro()
 // Load assets
 bool ModuleSceneIntro::Start()
 {
-	App->audio->PlayMusic("music/mercadonaremix.ogg");
+	/*App->audio->PlayMusic("music/mercadonaremix.ogg");*/
 
 	LOG("Loading Intro assets");
 	bool ret = true;
 
 
 	Cube shop1(80, 40, 1);
-	Cube shop3(250, 40, 1);
 	road.color.Set(0.0f, 0.0f, 0.0f);
 
-	MercaWall1.SetPos(-185, 0, -455);
+	MercaWall1.SetPos(-185, 0, -405);
 	MercaWall1.transform.rotate(90, vec3(0, 1, 0));
 	MercaWall1pb = App->physics->AddBody(MercaWall1, 0.0f);
 	
+	MercaWall2.SetPos(0, 0, -405);
+	MercaWall2.transform.rotate(90, vec3(0, 1, 0));
+	MercaWall2pb = App->physics->AddBody(MercaWall2, 0.0f);
+
+	MercaWall3.SetPos(-80, 0, -605);
+	MercaWall3pb = App->physics->AddBody(MercaWall3, 0.0f);
+
+
 	CreateRect(-10.0f, 0, 0, roadWidth, 50, road, ORIENTATION::NORTH);
 	Cube shelves(20, 25, 8);
 	shelves.color.Set(0.6f, 0.0f, 0.0f);
 
 	CreateRect(-145, 0, -205, 110, 1, shop1, ORIENTATION::NORTH);
-	CreateRect(-145, 0, -605, 110, 1, shop3, ORIENTATION::NORTH);
 	CreateRect(-145, 0, -235, 30, 20, shelves, ORIENTATION::SOUTH);
 	CreateRect(-145, 0, -215, 30, 20, shelves, ORIENTATION::SOUTH);
 	CreateRect(-65, 0, -235, 30, 20, shelves, ORIENTATION::SOUTH);
@@ -129,6 +138,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	shop2.transform.rotate(90, vec3(1, 0, 0));
 	shop2.Render();
 	MercaWall1.Render();
+	MercaWall3.Render();
 	//Render Map 
 	for (int i = 0; i < map.Count(); i++)
 	{
