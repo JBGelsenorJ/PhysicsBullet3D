@@ -29,7 +29,7 @@ ModuleSceneIntro::~ModuleSceneIntro()
 // Load assets
 bool ModuleSceneIntro::Start()
 {
-	App->audio->PlayMusic("music/mercadonaremix.ogg");
+	//App->audio->PlayMusic("music/mercadonaremix.ogg");
 
 	LOG("Loading Intro assets");
 	bool ret = true;
@@ -115,16 +115,16 @@ update_status ModuleSceneIntro::Update(float dt)
 	shop2.transform.rotate(90, vec3(1, 0, 0));
 	shop2.Render();
 
+
 	//Render Map 
-	for (int i = 0; i < map.Count(); i++)
-	{
-		map[i]->Render();
-	}
+	for (int i = 0; i < map.Count(); i++) map[i]->Render();
+	//Render CheckPoints
+	for (int i = 0; i < CheckPoints_List.Count(); i++) CheckPoints_List[i].Render();
+
 
 	//Render Hinges
 	axis.Render();
 	helix.Render();
-	CheckPointLight.Render();
 
 	mat4x4 transform;
 	bodyB->GetTransform(transform.M);
@@ -137,6 +137,9 @@ update_status ModuleSceneIntro::Update(float dt)
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
+	if (body1->is_sensor == true) {
+		LOG("HOLA ESTOY CHOCANDO");
+	}
 }
 
 void ModuleSceneIntro::CreateRect(const float& x, const float& y, const float& z, const float& width, const float& length, const Cube& cube, ORIENTATION orientation)
@@ -255,6 +258,6 @@ void ModuleSceneIntro::CreateCheckPoint(const vec3 Position, float angle) {
 	CheckPointLight.color = White;
 	CheckPointLight.SetPos(Position.x, Position.y + 10.0f, Position.z);
 
-
-	//TODO: MAKE AS SENSOR AND CANT COLLIDE
+	SavePoints.PushBack(PhysBodySensor);
+	CheckPoints_List.PushBack(CheckPointLight);
 }
