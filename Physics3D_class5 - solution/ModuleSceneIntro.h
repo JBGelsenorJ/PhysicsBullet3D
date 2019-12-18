@@ -89,4 +89,5 @@ private:
 	Sphere CheckPointLight;
 	int roadWidth;
 	int radius;
+
 };

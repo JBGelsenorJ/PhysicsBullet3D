@@ -187,11 +187,11 @@ update_status ModulePlayer::Update(float dt)
 
 void ModulePlayer::Nitro()
 {
-
 	if (nitro)
 	{
 		nitroTimer.Start();
 		nitro = false;
+		nitroTimer.Stop();
 	}
 
 	if (nitroTimer.Read() < 300)
@@ -200,7 +200,10 @@ void ModulePlayer::Nitro()
 			acceleration = MAX_ACCELERATION * 20;
 		else
 			acceleration = 0;
-
+	}
+	if (nitroTimer.Read() < 1000)
+	{
+		nitro = true;
 	}
 
 }
