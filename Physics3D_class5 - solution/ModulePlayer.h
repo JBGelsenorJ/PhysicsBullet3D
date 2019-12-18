@@ -9,7 +9,7 @@ struct PhysVehicle3D;
 #define MAX_ACCELERATION 500.0f
 #define TURN_DEGREES 15.0f * DEGTORAD
 #define BRAKE_POWER 100.0f
-#define IM mat4x4(1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f)
+#define START_POINT 5, 5, 10
 
 class ModulePlayer : public Module
 {
@@ -21,7 +21,7 @@ public:
 	update_status Update(float dt);
 	void Nitro();
 	bool CleanUp();
-	void RespawnVehicle(const PhysBody3D* PhysBodyInfo);
+	void RespawnVehicle(vec3 newPos);
 
 public:
 

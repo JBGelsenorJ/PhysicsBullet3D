@@ -17,8 +17,10 @@ ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Modul
 
 	//Initialize road variables
 	road.size.Set(2, 4, 2);
-	road.color.Set(0.3f, 0.32f, 0.4f);
-	roadWidth = 20;
+	roadForCurve.size.Set(1, 4, 1);
+	road.color = Turquoise;
+	roadForCurve.color.Set(0.3f, 0.32f, 0.4f);
+	roadWidth = 30;
 	radius = 20;
 
 	MercaWall1pb = nullptr;
@@ -73,21 +75,20 @@ bool ModuleSceneIntro::Start()
 
 	//Create circuit
 	CreateRect(-10.0f, 0, 0, roadWidth, 100, road, ORIENTATION::NORTH);
-	CreateCurve(-30.0f, 0, 200, roadWidth, 0, 90, road, radius);
-	CreateRect(-115, 0, 220, roadWidth, 40, road, ORIENTATION::WEST);
-	CreateCurve(-115.0f, 0.0f, 200, roadWidth, 90, 270, road, radius);
-	CreateRect(-115, 0, 160, roadWidth, 30, road, ORIENTATION::WEST);
-	CreateCurve(-60, 0, 140, roadWidth, -90, 90, road, radius);
-	CreateRect(-220, 0, 100, roadWidth, 80, road, ORIENTATION::WEST);
-	CreateCurve(-220.0f, 0.0f, 80, roadWidth, 90, 270, road, radius);
-	CreateRect(-220, 0, 40, roadWidth, 20, road, ORIENTATION::WEST);
-	CreateCurve(-180, 0, 20, roadWidth, -90, 90, road, radius);
-	CreateRect(-220, 0, -20, roadWidth, 20, road, ORIENTATION::WEST);
-	CreateCurve(-220.0f, 0.0f, -40, roadWidth, 90, 270, road, radius);
-	CreateRect(-220, 0, -80, roadWidth, 50, road, ORIENTATION::WEST);
-	CreateCurve(-120.0f, 0, -100, roadWidth, 0, 90, road, radius);
-	CreateRect(-100.0f, 0, -200, roadWidth, 50, road, ORIENTATION::NORTH);
-	CreateRect(-10.0f, 0, -210, roadWidth, 110, road, ORIENTATION::NORTH);
+	CreateCurve(-30.0f, 0, 200, roadWidth, 0, 90, roadForCurve, radius);
+	CreateRect(-140, 0, 220, roadWidth, 60, road, ORIENTATION::WEST);
+	CreateCurve(-140.0f, 0.0f, 200, roadWidth, 90, 270, roadForCurve, radius);
+	CreateRect(-140, 0, 150, roadWidth, 30, road, ORIENTATION::WEST);
+	CreateCurve(-80, 0, 130, roadWidth, -90, 90, roadForCurve, radius);
+	CreateRect(-190, 0, 80, roadWidth, 60, road, ORIENTATION::WEST);
+	CreateCurve(-190.0f, 0.0f, 60, roadWidth, 90, 270, roadForCurve, radius);
+	CreateRect(-190, 0, 10, roadWidth, 35, road, ORIENTATION::WEST);
+	CreateCurve(-120, 0, -10, roadWidth, -90, 90, roadForCurve, radius);
+	CreateRect(-180, 0, -60, roadWidth, 30, road, ORIENTATION::WEST);
+	CreateCurve(-180.0f, 0.0f, -80, roadWidth, 90, 270, roadForCurve, radius);
+	CreateRect(-180, 0, -130, roadWidth, 30, road, ORIENTATION::WEST);
+	CreateCurve(-120.0f, 0, -150, roadWidth, 0, 90, roadForCurve, radius);
+	CreateRect(-100.0f, 0, -200, roadWidth, 25, road, ORIENTATION::NORTH);
 
 	//Create CheckPoints
 	CreateCheckPoint({ 0.0f,0.0f,20.0f }, 90.0f);
@@ -98,9 +99,9 @@ bool ModuleSceneIntro::Start()
 
 
 	//Hinges
-	CreateHinge({ 0.0f, 1.0f, 40.0f }, 1.0f, 1);
-	CreateHinge({ 0.0f, 1.0f, 100.0f }, 1.0f, -1);
-	CreateHinge({ 0.0f, 1.0f, 160.0f }, 1.0f, 1);
+	CreateHinge({ 5.0f, 1.0f, 40.0f }, 1.0f, 1);
+	CreateHinge({ 5.0f, 1.0f, 100.0f }, 1.0f, -1);
+	CreateHinge({ 5.0f, 1.0f, 160.0f }, 1.0f, 1);
 	CreateHinge({ -8.0f, 1.0f, 220.0f }, 1.0f, -1);
 	CreateHinge({ -68.0f, 1.0f, 230.0f }, 2.0f, 1);
 	CreateHinge({-118.0f, 1.0f, 170.0f}, 2.0f, -1);
@@ -314,7 +315,7 @@ void ModuleSceneIntro::CreateHinge(vec3 Position, float speed, int way) {
 	PhysBody3D* bodyA = App->physics->AddBody(axis, 0.0f);
 
 	Cube helix;
-	helix.size.Set(7, 2, 1);
+	helix.size.Set(10, 2, 1);
 	helix.color = LivingCoral;
 	helix.SetPos((Position.x + 10.0f), (Position.y + 3.5f), (Position.z + 10.0f));
 	PhysBody3D* bodyB = App->physics->AddBody(helix, 4.0f);

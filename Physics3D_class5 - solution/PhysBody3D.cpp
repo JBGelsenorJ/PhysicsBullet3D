@@ -70,7 +70,10 @@ btRigidBody* PhysBody3D::GetBody() const
 	return body;
 }
 
-/*
-vec3 PhysBody3D::GetPosition() {
+
+void PhysBody3D::SetRotation(btQuaternion newQ)
+{
+	btTransform t = body->getWorldTransform();
+	t.setRotation(newQ);
+	body->setWorldTransform(t);
 }
-*/

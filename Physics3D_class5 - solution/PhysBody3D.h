@@ -2,6 +2,7 @@
 #define __PhysBody3D_H__
 
 #include "p2List.h"
+#include "Bullet/include/btBulletDynamicsCommon.h"
 
 class btRigidBody;
 class Module;
@@ -20,6 +21,7 @@ public:
 	void SetPos(float x, float y, float z);
 	void SetAsSensor(bool is_sensor);
 	bool IsSensor() const;
+	void SetRotation(btQuaternion newQ);
 
 	btRigidBody* GetBody() const;
 

@@ -86,6 +86,7 @@ public:
 private:
 
 	Cube road;
+	Cube roadForCurve;
 	Sphere CheckPointLight;
 	int roadWidth;
 	int radius;

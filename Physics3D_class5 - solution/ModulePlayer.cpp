@@ -114,7 +114,7 @@ bool ModulePlayer::Start()
 	car.wheels[3].steering = false;
 
 	vehicle = App->physics->AddVehicle(car);
-	vehicle->SetPos(0, 5, 10);
+	vehicle->SetPos(5, 5, 10);
 
 	return true;
 }
@@ -134,9 +134,7 @@ update_status ModulePlayer::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_F2)) 
 	{
-		vehicle->vehicle->getRigidBody()->setLinearVelocity(btVector3(0, 0, 0));
-		IdentityMatrix = IM;
-		vehicle->SetTransform(IdentityMatrix.M);
+		App->player->RespawnVehicle(vec3(START_POINT));	
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
@@ -208,8 +206,12 @@ void ModulePlayer::Nitro()
 
 }
 
-void ModulePlayer::RespawnVehicle(const PhysBody3D* PhysBodyInfo) {
-	//TODO: WILL SET ALL INFO RETRIEVED BY PHYSBODY PARAMETER INTO VEHICLE SETTINGS
+void ModulePlayer::RespawnVehicle(vec3 newPos)
+{
+	vehicle->SetPos(newPos.x, newPos.y, newPos.z);
+	vehicle->SetRotation({ 0, 0, 0, 1});
+	vehicle->vehicle->getRigidBody()->setAngularVelocity({ 0, 0, 0 });
+	vehicle->vehicle->getRigidBody()->setLinearVelocity({ 0, 0, 0 });
 
-	//VEHICLE SET POS, SET ROTATION...
+
 }

@@ -34,3 +34,4 @@ extern Color Yellow;
 extern Color Orange;
 extern Color LimeGreen;
 extern Color LivingCoral;
+extern Color Turquoise;
