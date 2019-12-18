@@ -69,3 +69,8 @@ btRigidBody* PhysBody3D::GetBody() const
 {
 	return body;
 }
+
+/*
+vec3 PhysBody3D::GetPosition() {
+}
+*/

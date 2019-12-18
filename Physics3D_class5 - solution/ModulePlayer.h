@@ -21,6 +21,7 @@ public:
 	update_status Update(float dt);
 	void Nitro();
 	bool CleanUp();
+	void RespawnVehicle(const PhysBody3D* PhysBodyInfo);
 
 public:
 
