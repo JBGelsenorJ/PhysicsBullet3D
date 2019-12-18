@@ -63,6 +63,12 @@ public:
 	p2DynArray<Sphere> CheckPoints_List;
 	p2DynArray<PhysBody3D*> SavePoints;
 
+	Cube MercaWall1;
+	PhysBody3D* MercaWall1pb = nullptr;
+	Cube MercaWall2;
+	PhysBody3D* MercaWall2pb = nullptr;
+
+
 	//Hinges
 	PhysBody3D* bodyA = nullptr;
 	Cube axis;
