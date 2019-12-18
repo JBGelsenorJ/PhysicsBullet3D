@@ -95,15 +95,12 @@ bool ModuleSceneIntro::Start()
 	SetBoxes({0.0f,10.0f,0.0f});
 	
 	//Hinges
-	helix.color = White;
-	axis.color = Red;
-	CreateHinge(helix, vec3(0, 1, 40), Red, axis, vec3(10, 3.5, 50), White, bodyA, bodyB);
-	CreateHinge(helix, vec3(0, 1, 100), Red, axis, vec3(10, 3.5, 60), White,bodyA, bodyB);
-	CreateHinge(helix, vec3(0, 1, 160), Red, axis, vec3(10, 3.5, 60), White, bodyA, bodyB);
-	CreateHinge(helix, vec3(-8, 1, 220), Red, axis, vec3(10, 3.5, 60), White, bodyA, bodyB);
-	CreateHinge(helix, vec3(-68, 1, 230), Red, axis, vec3(10, 3.5, 60), White, bodyA, bodyB);
-	CreateHinge(helix, vec3(-118, 1, 170), Red, axis, vec3(10, 3.5, 60), White, bodyA, bodyB);
-	CreateHinge(helix, vec3(-68, 1, 170), Red, axis, vec3(10, 3.5, 60), White, bodyA, bodyB);
+	CreateHinge({ 0.0f, 1.0f, 40.0f });
+	CreateHinge({ 0.0f, 1.0f, 100.0f });
+	CreateHinge({ 0.0f, 1.0f, 160.0f });
+	CreateHinge({ -8.0f, 1.0f, 220.0f });
+	CreateHinge({ -68.0f, 1.0f, 230.0f });
+
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
@@ -115,8 +112,13 @@ bool ModuleSceneIntro::CleanUp()
 {
 	LOG("Unloading Intro scene");
 	
-	for (uint i = 0; i < map.Count(); ++i)
-		delete map[i];
+	for (uint i = 0; i < map.Count(); ++i) delete map[i];
+
+	//for (uint i = 0; i < HingesBody.Count(); ++i) delete HingesBody[i];
+
+	//for (uint i = 0; i < CheckPoints_List.Count(); ++i) delete CheckPoints_List[i];
+
+	//for (uint i = 0; i < Traps.Count(); ++i) delete Traps[i];
 
 	return true;
 }
@@ -144,12 +146,14 @@ update_status ModuleSceneIntro::Update(float dt)
 	for (int i = 0; i < map.Count(); i++) map[i]->Render();
 	//Render CheckPoints
 	for (int i = 0; i < CheckPoints_List.Count(); i++) CheckPoints_List[i].Render();
+	//Render traps
+	for (int i = 0; i < Traps.Count(); i++) Traps[i].Render();
 
-
-	//Render Hinges
-	
-	RenderHinge(helix, axis);
-
+	//Update traps position
+	for (int i = 1; i < Traps.Count(); i = i + 2) {
+		HingesBody[i]->GetTransform(transform.M);
+		Traps[i].transform = transform;
+	}
 
 	return UPDATE_CONTINUE;
 }
@@ -288,26 +292,27 @@ void ModuleSceneIntro::CreateCheckPoint(const vec3 Position, float angle) {
 	SavePoints.PushBack(PhysBodySensor);
 	CheckPoints_List.PushBack(CheckPointLight);
 }
-void ModuleSceneIntro::CreateHinge(Cube helix, vec3 setpos1, Color helixc, Cube axis, vec3 setpos2, Color axisc,PhysBody3D* bodyA, PhysBody3D* bodyB) {
 
-	axis.SetPos(setpos1.x, setpos1.y, setpos1.z);
-	axis.color = axisc;
-	bodyA = App->physics->AddBody(axis, 0.0f);
+void ModuleSceneIntro::CreateHinge(vec3 Position) {
 
+	Cube axis;
+	axis.size.Set(1, 3, 1);
+	axis.color = White;
+	axis.SetPos(Position.x, Position.y, Position.z);
+	PhysBody3D* bodyA = App->physics->AddBody(axis, 0.0f);
 
-	helix.SetPos(setpos2.x, setpos2.y, setpos2.z);
-	helix.color = helixc;
-	bodyB = App->physics->AddBody(helix, 4.0f);
+	Cube helix;
+	helix.size.Set(7, 2, 1);
+	helix.color = Red;
+	helix.SetPos((Position.x + 10.0f), (Position.y + 3.5f), (Position.z + 10.0f));
+	PhysBody3D* bodyB = App->physics->AddBody(helix, 4.0f);
+
+	HingesBody.PushBack(bodyA);
+	HingesBody.PushBack(bodyB);
+
+	Traps.PushBack(axis);
+	Traps.PushBack(helix);
 
 	hinge = App->physics->AddConstraintHinge(*bodyA, *bodyB, vec3(0, 0, 0), vec3(5, 0, 0), vec3(0, 1, 0), vec3(0, 1, 0), true);
 	hinge->enableAngularMotor(true, 4.0f, INFINITE);
-	mat4x4 transform;
-	bodyB->GetTransform(transform.M);
-	helix.transform = transform;
-}
-void ModuleSceneIntro::RenderHinge(Cube helix, Cube axis) {
-
-	axis.Render();
-	helix.Render();
-
 }

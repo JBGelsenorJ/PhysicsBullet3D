@@ -41,7 +41,7 @@ public:
 	void SetBoxes(const vec3);
 	void CheckBoxes();
 	void CreateCheckPoint(const vec3 Position, float angle);
-	void CreateHinge(Cube helix, vec3 setpos1, Color helixc, Cube axis, vec3 setpos2, Color axisc, PhysBody3D* bodyA, PhysBody3D* bodyB);
+	void CreateHinge(vec3 Position);
 	void RenderHinge(Cube helix, Cube axis);
 public:
 
@@ -63,6 +63,8 @@ public:
 	p2List<Cube*> Boxes_List;	
 	p2DynArray<Sphere> CheckPoints_List;
 	p2DynArray<PhysBody3D*> SavePoints;
+	p2DynArray<Cube> Traps;
+	p2DynArray<PhysBody3D*> HingesBody;
 
 	Cube MercaWall1;
 	PhysBody3D* MercaWall1pb = nullptr;
@@ -79,6 +81,7 @@ public:
 	PhysBody3D* bodyB;
 	Cube helix;
 	btHingeConstraint* hinge = nullptr;
+	mat4x4 transform;
 
 private:
 
