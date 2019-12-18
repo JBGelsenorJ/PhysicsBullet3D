@@ -92,7 +92,7 @@ bool ModuleSceneIntro::Start()
 	CreateCheckPoint({ 0.0f, 0.0f, 120.0f }, 90.0f);
 
 	//Create Boxes
-	SetBoxes({0.0f,10.0f,0.0f});
+	SetBoxes({0.0f,0.0f,10.0f});
 	
 	//Hinges
 	CreateHinge({ 0.0f, 1.0f, 40.0f });
@@ -115,10 +115,9 @@ bool ModuleSceneIntro::CleanUp()
 	for (uint i = 0; i < map.Count(); ++i) delete map[i];
 
 	//for (uint i = 0; i < HingesBody.Count(); ++i) delete HingesBody[i];
-
 	//for (uint i = 0; i < CheckPoints_List.Count(); ++i) delete CheckPoints_List[i];
-
 	//for (uint i = 0; i < Traps.Count(); ++i) delete Traps[i];
+	//for (uint i = 0; i < Boxes_List.count(); i++) delete Boxes_List[i];
 
 	return true;
 }
@@ -260,10 +259,10 @@ void ModuleSceneIntro::SetBoxes(const vec3 Position) {
 
 	box->SetPos(Position.x, Position.y, Position.z);
 	box->size.Set(2.0f, 2.0f, 2.0f);
-	box->color.Set(1.0f, 0.0f, 0.0f);
+	box->color = Blue;
 	Boxes_List.add(box);
 
-	phys = App->physics->AddBody(*box, 0.0F);
+	phys = App->physics->AddBody(*box, this, 0.0F, true);
 	map.PushBack(box);
 }
 
