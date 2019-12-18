@@ -41,7 +41,8 @@ public:
 	void SetBoxes(const vec3);
 	void CheckBoxes();
 	void CreateCheckPoint(const vec3 Position, float angle);
-
+	void CreateHinge(Cube helix, vec3 setpos1, Color helixc, Cube axis, vec3 setpos2, Color axisc, PhysBody3D* bodyA, PhysBody3D* bodyB);
+	void RenderHinge(Cube helix, Cube axis);
 public:
 
 	p2DynArray <Cube*> map;
