@@ -28,6 +28,9 @@ ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Modul
 	MercaWall1 = Cube(400, 40, 1);
 	MercaWall2 = Cube(400, 40, 1);
 	MercaWall3 = Cube(210, 40, 1);
+	MercaWall1.color = LimeGreen;
+	MercaWall2.color = LimeGreen;
+	MercaWall3.color = LimeGreen;
 }
 
 ModuleSceneIntro::~ModuleSceneIntro()
@@ -49,7 +52,7 @@ bool ModuleSceneIntro::Start()
 	MercaWall1.SetPos(-185, 0, -405);
 	MercaWall1.transform.rotate(90, vec3(0, 1, 0));
 	MercaWall1pb = App->physics->AddBody(MercaWall1, 0.0f);
-
+	
 	MercaWall2.SetPos(0, 0, -405);
 	MercaWall2.transform.rotate(90, vec3(0, 1, 0));
 	MercaWall2pb = App->physics->AddBody(MercaWall2, 0.0f);
@@ -95,21 +98,21 @@ bool ModuleSceneIntro::Start()
 
 
 	//Hinges
-	CreateHinge({ 0.0f, 1.0f, 40.0f });
-	CreateHinge({ 0.0f, 1.0f, 100.0f });
-	CreateHinge({ 0.0f, 1.0f, 160.0f });
-	CreateHinge({ -8.0f, 1.0f, 220.0f });
-	CreateHinge({ -68.0f, 1.0f, 230.0f });
-	CreateHinge({-118.0f, 1.0f, 170.0f});
-	CreateHinge({ -68.0f, 1.0f, 170.0f });
-	CreateHinge({ -32.0f, 1.0f, 150.0f });
-	CreateHinge({ -60.0f, 1.0f, 110.0f });
-	CreateHinge({ -120.0f, 1.0f, 110.0f });
-	CreateHinge({ -180.0f, 1.0f, 110.0f });
-	CreateHinge({ -250.0f, 1.0f, 80.0f });
-	CreateHinge({ -180.0f, 1.0f, 50.0f });
-	CreateHinge({ -200.0f, 1.0f, -10.0f });
-	CreateHinge({ -100.0f, 1.0f, -10.0f });
+	CreateHinge({ 0.0f, 1.0f, 40.0f }, 1.0f, 1);
+	CreateHinge({ 0.0f, 1.0f, 100.0f }, 1.0f, -1);
+	CreateHinge({ 0.0f, 1.0f, 160.0f }, 1.0f, 1);
+	CreateHinge({ -8.0f, 1.0f, 220.0f }, 1.0f, -1);
+	CreateHinge({ -68.0f, 1.0f, 230.0f }, 2.0f, 1);
+	CreateHinge({-118.0f, 1.0f, 170.0f}, 2.0f, -1);
+	CreateHinge({ -68.0f, 1.0f, 170.0f }, 2.0f, 1);
+	CreateHinge({ -32.0f, 1.0f, 150.0f }, 2.0f, -1);
+	CreateHinge({ -60.0f, 1.0f, 110.0f }, 3.0f, 1);
+	CreateHinge({ -120.0f, 1.0f, 110.0f }, 3.0f, -1);
+	CreateHinge({ -180.0f, 1.0f, 110.0f }, 3.0f, 1);
+	CreateHinge({ -250.0f, 1.0f, 80.0f }, 4.0f, -1);
+	CreateHinge({ -180.0f, 1.0f, 50.0f }, 4.0f, 1);
+	CreateHinge({ -200.0f, 1.0f, -10.0f }, 5.0f, -1);
+	CreateHinge({ -100.0f, 1.0f, -10.0f }, 5.0f, 1);
 	
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
@@ -302,7 +305,7 @@ void ModuleSceneIntro::CreateCheckPoint(const vec3 Position, float angle) {
 	CheckPoints_List.PushBack(CheckPointLight);
 }
 
-void ModuleSceneIntro::CreateHinge(vec3 Position) {
+void ModuleSceneIntro::CreateHinge(vec3 Position, float speed, int way) {
 
 	Cube axis;
 	axis.size.Set(1, 3, 1);
@@ -312,7 +315,7 @@ void ModuleSceneIntro::CreateHinge(vec3 Position) {
 
 	Cube helix;
 	helix.size.Set(7, 2, 1);
-	helix.color = Red;
+	helix.color = LivingCoral;
 	helix.SetPos((Position.x + 10.0f), (Position.y + 3.5f), (Position.z + 10.0f));
 	PhysBody3D* bodyB = App->physics->AddBody(helix, 4.0f);
 
@@ -322,6 +325,6 @@ void ModuleSceneIntro::CreateHinge(vec3 Position) {
 	Traps.PushBack(axis);
 	Traps.PushBack(helix);
 
-	hinge = App->physics->AddConstraintHinge(*bodyA, *bodyB, vec3(0, 0, 0), vec3(5, 0, 0), vec3(0, 1, 0), vec3(0, 1, 0), true);
-	hinge->enableAngularMotor(true, 4.0f, INFINITE);
+	hinge = App->physics->AddConstraintHinge(*bodyA, *bodyB, vec3(0, 0, 0), vec3(5, 0, 0), vec3(0, way, 0), vec3(0, 1, 0), true);
+	hinge->enableAngularMotor(true, speed, INFINITE);
 }

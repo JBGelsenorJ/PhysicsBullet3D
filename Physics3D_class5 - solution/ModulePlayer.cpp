@@ -201,7 +201,7 @@ void ModulePlayer::Nitro()
 		else
 			acceleration = 0;
 	}
-	if (nitroTimer.Read() < 1000)
+	if (nitroTimer.Read() < 2000)
 	{
 		nitro = true;
 	}

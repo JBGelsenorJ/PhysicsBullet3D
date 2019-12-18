@@ -41,7 +41,7 @@ public:
 	void SetBoxes(const vec3);
 	void CheckBoxes();
 	void CreateCheckPoint(const vec3 Position, float angle);
-	void CreateHinge(vec3 Position);
+	void CreateHinge(vec3 Position, float speed, int way);
 	void RenderHinge(Cube helix, Cube axis);
 public:
 
