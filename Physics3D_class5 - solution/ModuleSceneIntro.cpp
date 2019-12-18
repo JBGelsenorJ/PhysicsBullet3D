@@ -7,15 +7,16 @@
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-	//Initialize hinge elements
+	//Initialize map elements
 	bodyA = nullptr;
 	bodyB = nullptr;
 	hinge = nullptr;
 
 	axis = Cube(1, 3, 1);
 	helix = Cube(7, 2, 1);
+	firstRamp = Cube(10, 2, 40);
+	secondRamp = Cube(-10, 2, 40);
 
-	//Initialize road variables
 	road.size.Set(2, 4, 2);
 	roadForCurve.size.Set(1, 4, 1);
 	road.color = Turquoise;
@@ -63,7 +64,7 @@ bool ModuleSceneIntro::Start()
 	MercaWall3pb = App->physics->AddBody(MercaWall3, 0.0f);
 
 
-	CreateRect(-10.0f, 0, 0, roadWidth, 50, road, ORIENTATION::NORTH);
+	
 	Cube shelves(20, 25, 8);
 	shelves.color.Set(0.6f, 0.0f, 0.0f);
 
@@ -74,13 +75,13 @@ bool ModuleSceneIntro::Start()
 	CreateRect(-65, 0, -215, 30, 20, shelves, ORIENTATION::SOUTH);
 
 	//Create circuit
-	CreateRect(-10.0f, 0, 0, roadWidth, 100, road, ORIENTATION::NORTH);
+	CreateRect(-10.0f, 0, -150, roadWidth, 175, road, ORIENTATION::NORTH);
 	CreateCurve(-30.0f, 0, 200, roadWidth, 0, 90, roadForCurve, radius);
-	CreateRect(-140, 0, 220, roadWidth, 60, road, ORIENTATION::WEST);
+	CreateRect(-140, 0, 220, roadWidth, 55, road, ORIENTATION::WEST);
 	CreateCurve(-140.0f, 0.0f, 200, roadWidth, 90, 270, roadForCurve, radius);
 	CreateRect(-140, 0, 150, roadWidth, 30, road, ORIENTATION::WEST);
 	CreateCurve(-80, 0, 130, roadWidth, -90, 90, roadForCurve, radius);
-	CreateRect(-190, 0, 80, roadWidth, 60, road, ORIENTATION::WEST);
+	CreateRect(-190, 0, 80, roadWidth, 55, road, ORIENTATION::WEST);
 	CreateCurve(-190.0f, 0.0f, 60, roadWidth, 90, 270, roadForCurve, radius);
 	CreateRect(-190, 0, 10, roadWidth, 35, road, ORIENTATION::WEST);
 	CreateCurve(-120, 0, -10, roadWidth, -90, 90, roadForCurve, radius);
@@ -114,9 +115,10 @@ bool ModuleSceneIntro::Start()
 	CreateHinge({ -180.0f, 1.0f, 50.0f }, 4.0f, 1);
 	CreateHinge({ -200.0f, 1.0f, -10.0f }, 5.0f, -1);
 	CreateHinge({ -100.0f, 1.0f, -10.0f }, 5.0f, 1);
-	
-	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
-	App->camera->LookAt(vec3(0, 0, 0));
+
+	//Create bridge
+	CreateRamp(5.0f, 0.25f, -70.0f, 0.0f, -25.0f, { 1, 0, 0 }, true);
+	CreateRamp(5.0f, 0.25f, -20.0f, 0.0f, 25.0f, { 1, 0, 0 }, true);
 
 	return ret;
 }
@@ -126,12 +128,10 @@ bool ModuleSceneIntro::CleanUp()
 {
 	LOG("Unloading Intro scene");
 	
+	//Delete lists
 	for (uint i = 0; i < map.Count(); ++i) delete map[i];
 
-	//for (uint i = 0; i < HingesBody.Count(); ++i) delete HingesBody[i];
-	//for (uint i = 0; i < CheckPoints_List.Count(); ++i) delete CheckPoints_List[i];
-	//for (uint i = 0; i < Traps.Count(); ++i) delete Traps[i];
-	//for (uint i = 0; i < Boxes_List.count(); i++) delete Boxes_List[i];
+	ramp.clear();
 
 	return true;
 }
@@ -161,11 +161,15 @@ update_status ModuleSceneIntro::Update(float dt)
 	for (int i = 0; i < CheckPoints_List.Count(); i++) CheckPoints_List[i].Render();
 	//Render traps
 	for (int i = 0; i < Traps.Count(); i++) Traps[i].Render();
-
 	//Update traps position
 	for (int i = 1; i < Traps.Count(); i = i + 2) {
 		HingesBody[i]->GetTransform(transform.M);
 		Traps[i].transform = transform;
+	}
+	//Render ramps
+	for (p2List_item<Cube>* ramp_item = ramp.getFirst(); ramp_item != nullptr; ramp_item = ramp_item->next)
+	{
+		ramp_item->data.Render();
 	}
 
 	return UPDATE_CONTINUE;
@@ -328,4 +332,26 @@ void ModuleSceneIntro::CreateHinge(vec3 Position, float speed, int way) {
 
 	hinge = App->physics->AddConstraintHinge(*bodyA, *bodyB, vec3(0, 0, 0), vec3(5, 0, 0), vec3(0, way, 0), vec3(0, 1, 0), true);
 	hinge->enableAngularMotor(true, speed, INFINITE);
+}
+
+void ModuleSceneIntro::CreateRamp(const float x, const float y, const float z, float mass, float angle, vec3 angle_rot, bool is_collider)
+{
+	
+	Cube cube;
+	cube.size.Set(22, 0.5, 20);
+	cube.color = Turquoise;
+	cube.SetPos(x, y, z);
+	
+	if (angle != 0.0f)
+	{
+		cube.SetRotation(angle, angle_rot);
+	}
+
+	if (is_collider)
+	{
+		App->physics->AddBody(cube, mass);
+	}
+
+	ramp.add(cube);
+
 }

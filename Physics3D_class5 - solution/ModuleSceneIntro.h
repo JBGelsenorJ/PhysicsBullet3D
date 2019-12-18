@@ -43,6 +43,7 @@ public:
 	void CreateCheckPoint(const vec3 Position, float angle);
 	void CreateHinge(vec3 Position, float speed, int way);
 	void RenderHinge(Cube helix, Cube axis);
+	void CreateRamp(const float x, const float y, const float z, float mass, float angle, vec3 angle_rot, bool is_collider);
 public:
 
 	p2DynArray <Cube*> map;
@@ -65,6 +66,7 @@ public:
 	p2DynArray<PhysBody3D*> SavePoints;
 	p2DynArray<Cube> Traps;
 	p2DynArray<PhysBody3D*> HingesBody;
+	p2List<Cube> ramp;
 
 	Cube MercaWall1;
 	PhysBody3D* MercaWall1pb = nullptr;
@@ -82,6 +84,8 @@ public:
 	Cube helix;
 	btHingeConstraint* hinge = nullptr;
 	mat4x4 transform;
+	Cube firstRamp;
+	Cube secondRamp;
 
 private:
 
