@@ -208,7 +208,7 @@ update_status ModulePlayer::Update(float dt)
 	vehicle->Render();
 	
 	char title[80];
-	sprintf_s(title, "%.1f Km/h || Checkpoints: %i || Time: %.1f || Boxes Left: %i", vehicle->GetKmh(), App->scene_intro->checkpoints_index, App->scene_intro->seconds, App->scene_intro->boxes);
+	sprintf_s(title, "%.1f Km/h || Checkpoints: %i || Time: %.1f || Hamburguer To Collect: %i", vehicle->GetKmh(), App->scene_intro->checkpoints_index, App->scene_intro->seconds, App->scene_intro->HamburguerNumber);
 	App->window->SetTitle(title);
 
 	return UPDATE_CONTINUE;
@@ -248,8 +248,7 @@ void ModulePlayer::RespawnVehicle(vec3 newPos, btQuaternion rotation)
 
 void ModulePlayer::RestartGame() {
 	App->player->RespawnVehicle(vec3(START_POINT), { 0, 0 , 0, 1 });
-	App->scene_intro->boxes = 5;
+	App->scene_intro->HamburguerNumber = 1;
 	App->scene_intro->checkpoints_index = 0;
-	App->scene_intro->box_position = 0;
 	for (uint i = 0; i < App->scene_intro->CheckPoints_List.Count(); i++) App->scene_intro->CheckPoints_List[i].color = White;
 }

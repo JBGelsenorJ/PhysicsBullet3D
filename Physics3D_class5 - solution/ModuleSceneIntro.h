@@ -100,7 +100,7 @@ public:
 	Cube secondRamp;
 	uint counter;
 	uint checkpoints_index = 0;
-	int boxes = 5;
+	int HamburguerNumber = 1;
 	Burguer Hamburguer;
 
 	int minutes = 0;

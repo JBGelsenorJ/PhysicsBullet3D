@@ -104,7 +104,7 @@ bool ModuleSceneIntro::Start()
 	CreateCheckPoint({ -100.0f, 2.5f, -40.0f }, 90.0f);
 	CreateCheckPoint({ -90.0f, 2.5f, -250.0f }, 90.0f);
 
-	SetBox({ 0.0f,10.0f,0.0f });
+	SetBurguer({ 0.0f,0.0f,0.0f });
 
 	//Hinges
 	CreateHinge({ 5.0f, 1.0f, 40.0f }, 1.0f, 1);
@@ -184,7 +184,8 @@ update_status ModuleSceneIntro::Update(float dt)
 	MercaWall3.Render();
 	MercaEntrance.Render();
 	start.Render();
-	box.Render();
+	Hamburguer.tomato->Render();
+	Hamburguer.meat->Render();
 
 	//Render Map 
 	for (int i = 0; i < cubes.Count(); i++) cubes[i]->Render();
@@ -202,7 +203,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	for (p2List_item<Cylinder>* cylinders_item = cylinders.getFirst(); cylinders_item != nullptr; cylinders_item = cylinders_item->next) cylinders_item->data.Render();
 
 	//If you collected the 5 boxes you win and game restarts. Win condition
-	if(boxes == 0)App->player->RestartGame();
+	if(HamburguerNumber == 0)App->player->RestartGame();
 	
 	return UPDATE_CONTINUE;
 }
@@ -340,30 +341,28 @@ void ModuleSceneIntro::SetBurguer(const vec3 Position) {
 	Hamburguer.top_bread = new Cube(2.0f, 0.5f, 2.0f);
 	Hamburguer.top_bread->color = BreadColor;
 	cubes.PushBack(Hamburguer.top_bread);
-	Hamburguer.top_bread->SetPos({ Position.x, Position.y, Position.z });
+	Hamburguer.top_bread->SetPos( Position.x, Position.y + 3.3f, Position.z );
 
 	Hamburguer.Lettuce = new Cube(2.0f, 0.1f, 2.0f);
 	Hamburguer.Lettuce->color = LettuceColor;
 	cubes.PushBack(Hamburguer.Lettuce);
-	Hamburguer.top_bread->SetPos({ Position.x, Position.y, Position.z });
+	Hamburguer.Lettuce->SetPos( Position.x, Position.y + 2.95f, Position.z );
 
-
-	Hamburguer.meat = new Cylinder(2.0f, 0.5f);
+	Hamburguer.meat = new Cylinder(1.0f, 0.5f);
 	Hamburguer.meat->color = MeatColor;
-	cubes.PushBack(Hamburguer.meat);
-	Hamburguer.top_bread->SetPos({ Position.x, Position.y, Position.z });
+	Hamburguer.meat->SetRotation(90.0f, { 0.0f, 0.0f, 1.0f });
+	Hamburguer.meat->SetPos( Position.x, Position.y + 2.94f, Position.z );
 
-
-	Hamburguer.tomato = new Cylinder(2.0f, 0.1f);
+	Hamburguer.tomato = new Cylinder(1.0f, 0.1f);
 	Hamburguer.tomato->color = TomatoColor;
-	cubes.PushBack(Hamburguer.tomato);
-	Hamburguer.top_bread->SetPos({ Position.x, Position.y, Position.z });
+	Hamburguer.tomato->SetRotation(90.0f, { 0.0f, 0.0f, 1.0f });
+	Hamburguer.tomato->SetPos( Position.x, Position.y+2.7f, Position.z );
 
 
 	Hamburguer.bottom_bread = new Cube(2.0f, 0.5f, 2.0f);
 	Hamburguer.bottom_bread->color = BreadColor;
 	cubes.PushBack(Hamburguer.bottom_bread);
-	Hamburguer.top_bread->SetPos({ Position.x, Position.y, Position.z });
+	Hamburguer.bottom_bread->SetPos( Position.x, Position.y+2.4f, Position.z);
 }
 
 void ModuleSceneIntro::CreateCheckPoint(const vec3 Position, float angle) {
