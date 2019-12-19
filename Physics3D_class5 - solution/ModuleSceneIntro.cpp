@@ -39,6 +39,8 @@ ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Modul
 	start = Cube(32, 5, 0.4);
 	start.color = LimeGreen;
 
+	minutes = 1;
+	seconds = 60.0f;
 }
 
 ModuleSceneIntro::~ModuleSceneIntro()
@@ -99,9 +101,9 @@ bool ModuleSceneIntro::Start()
 	CreateRect(-100.0f, 0, -200, roadWidth, 25, road, ORIENTATION::NORTH);
 
 	//Create CheckPoints
-	CreateCheckPoint({ 5.0f, 2.5f, -100.0f }, 90.0f);
 	CreateCheckPoint({ -50.0f, 2.5f, 135.0f }, 90.0f);
 	CreateCheckPoint({ -100.0f, 2.5f, -40.0f }, 90.0f);
+	CreateCheckPoint({ -90.0f, 2.5f, -250.0f }, 90.0f);
 
 	SetBox({ 0.0f,10.0f,0.0f });
 
@@ -163,6 +165,8 @@ bool ModuleSceneIntro::CleanUp()
 update_status ModuleSceneIntro::Update(float dt)
 {
 
+	if (startCountdown)TimeToLoseUpdate(dt);
+
 	Cube ground(2000, 1, 2000);
 	ground.SetPos(0, -1, 0);
 	ground.Render();
@@ -206,28 +210,28 @@ update_status ModuleSceneIntro::Update(float dt)
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
+
 	if (body1 == SavePoints[0] && body2 == (PhysBody3D*)App->player->vehicle)
 	{
 		CheckPoints_List[0].color = Yellow;
-		checkpoints_index = 0;
+		checkpoints_index = 1;
 	};
 
 	if (body1 == SavePoints[1] && body2 == (PhysBody3D*)App->player->vehicle)
 	{
 		CheckPoints_List[1].color = Yellow;
-		checkpoints_index = 1;
+		checkpoints_index = 2;
 	};
 
 	if (body1 == SavePoints[2] && body2 == (PhysBody3D*)App->player->vehicle)
 	{
 		CheckPoints_List[2].color = Yellow;
-		checkpoints_index = 2;
+		checkpoints_index = 3;
 	};
 
 	if (body1 == pb_box && body2 == (PhysBody3D*)App->player->vehicle) {
 		switch (box_position) {
 		case 0:
-
 			break;
 		case 1: 
 			break;
@@ -240,6 +244,7 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		}
 		boxes--;
 	}
+
 }
 
 void ModuleSceneIntro::CreateRect(const float& x, const float& y, const float& z, const float& width, const float& length, const Cube& cube, ORIENTATION orientation)
@@ -418,4 +423,21 @@ Cylinder ModuleSceneIntro::CreateCylinder(float radius, float height, vec3 pos, 
 	cylinders.add(cy);
 
 	return cy;
+}
+
+void ModuleSceneIntro::TimeToLoseUpdate(float dt)
+{
+	if (minutes >= 0) {
+		seconds -= 1.0f * dt;
+
+		if (seconds <= 0)
+		{
+			seconds = 60.0f;
+			minutes -= 1;
+		}
+	}
+	else
+	{
+		endTime = true;
+	}
 }

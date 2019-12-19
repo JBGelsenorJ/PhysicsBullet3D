@@ -149,15 +149,23 @@ update_status ModulePlayer::Update(float dt)
 		switch (App->scene_intro->checkpoints_index)
 		{
 		case 0:
-			App->player->RespawnVehicle(vec3(CHECKPOINT_0));
+			App->player->RespawnVehicle(vec3(START_POINT), { 0, 0, 0, 1 });
 			break;
 		case 1:
-			App->player->RespawnVehicle(vec3(CHECKPOINT_1));
+			App->player->RespawnVehicle(vec3(CHECKPOINT_0), { 0, 1, 0, 0 });
 			break;
 		case 2:
-			App->player->RespawnVehicle(vec3(CHECKPOINT_2));
+			App->player->RespawnVehicle(vec3(CHECKPOINT_1), { 0, 1, 0, -1 });
+			break;
+		case 3:
+			App->player->RespawnVehicle(vec3(CHECKPOINT_2), { 0, 1, 0, 0 });
 			break;
 		}
+	}
+	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
+	{
+		App->player->RespawnVehicle(vec3(CHECKPOINT_2), { 0, 1, 0, 0 });
+		App->scene_intro->startCountdown = true;
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
@@ -200,7 +208,7 @@ update_status ModulePlayer::Update(float dt)
 	vehicle->Render();
 	
 	char title[80];
-	sprintf_s(title, "%.1f Km/h || Checkpoints: %i || Boxes Left: %i", vehicle->GetKmh(), App->scene_intro->checkpoints_index, App->scene_intro->boxes);
+	sprintf_s(title, "%.1f Km/h || Checkpoints: %i || Time: %i:%.1f || Boxes Left: %i", vehicle->GetKmh(), App->scene_intro->checkpoints_index, App->scene_intro->minutes, App->scene_intro->seconds, App->scene_intro->boxes);
 	App->window->SetTitle(title);
 
 	return UPDATE_CONTINUE;
@@ -218,7 +226,7 @@ void ModulePlayer::Nitro()
 	if (nitroTimer.Read() < 300)
 	{
 		if (vehicle->GetKmh() <= 150)
-			acceleration = MAX_ACCELERATION * 20;
+			acceleration = MAX_ACCELERATION * 10;
 		else
 			acceleration = 0;
 	}
@@ -229,10 +237,10 @@ void ModulePlayer::Nitro()
 
 }
 
-void ModulePlayer::RespawnVehicle(vec3 newPos)
+void ModulePlayer::RespawnVehicle(vec3 newPos, btQuaternion rotation)
 {
 	vehicle->SetPos(newPos.x, newPos.y, newPos.z);
-	vehicle->SetRotation({ 0, 0, 0, 1});
+	vehicle->SetRotation(rotation);
 	vehicle->vehicle->getRigidBody()->setAngularVelocity({ 0, 0, 0 });
 	vehicle->vehicle->getRigidBody()->setLinearVelocity({ 0, 0, 0 });
 

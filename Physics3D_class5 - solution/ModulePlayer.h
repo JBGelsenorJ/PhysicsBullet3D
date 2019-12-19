@@ -10,9 +10,9 @@ struct PhysVehicle3D;
 #define TURN_DEGREES 15.0f * DEGTORAD
 #define BRAKE_POWER 100.0f
 #define START_POINT 5, 5, -120
-#define CHECKPOINT_0 5, 2.5, -100 
-#define CHECKPOINT_1 -50, 2.5, 135 
-#define CHECKPOINT_2 -100, 2.5, -40.0 
+#define CHECKPOINT_0 -50, 2.5, 135 
+#define CHECKPOINT_1 -100, 2.5, -40.0 
+#define CHECKPOINT_2 -90.0, 2.5, -250
 
 class ModulePlayer : public Module
 {
@@ -24,8 +24,9 @@ public:
 	update_status Update(float dt);
 	void Nitro();
 	bool CleanUp();
-	void RespawnVehicle(vec3 newPos);
 	void RestartGame();
+	void RespawnVehicle(vec3 newPos, btQuaternion rotation);
+
 
 public:
 

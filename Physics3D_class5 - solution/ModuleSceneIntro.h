@@ -43,6 +43,7 @@ public:
 	void SetBox(const vec3);
 	void CreateCheckPoint(const vec3 Position, float angle);
 	void CreateHinge(vec3 Position, float speed, int way);
+	void TimeToLoseUpdate(float dt);
 
 public:
 
@@ -95,6 +96,12 @@ public:
 	uint counter;
 	uint checkpoints_index = 0;
 	int boxes = 5;
+
+	int minutes = 0;
+	float seconds = 0;
+	bool endTime = false;
+	bool startCountdown = false;
+
 
 private:
 
