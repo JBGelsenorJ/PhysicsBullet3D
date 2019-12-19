@@ -35,3 +35,7 @@ extern Color Orange;
 extern Color LimeGreen;
 extern Color LivingCoral;
 extern Color Turquoise;
+extern Color BreadColor;
+extern Color LettuceColor;
+extern Color TomatoColor;
+extern Color MeatColor;
