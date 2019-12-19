@@ -251,6 +251,7 @@ void ModulePlayer::RespawnVehicle(vec3 newPos, btQuaternion rotation)
 void ModulePlayer::RestartGame() {
 	App->player->RespawnVehicle(vec3(START_POINT), { 0, 0 , 0, 1 });
 	App->scene_intro->HamburguerNumber = 1;
+	App->scene_intro->StopRenderBurguer = false;
 	App->scene_intro->checkpoints_index = 0;
 	for (uint i = 0; i < App->scene_intro->CheckPoints_List.Count(); i++) App->scene_intro->CheckPoints_List[i].color = White;
 }
