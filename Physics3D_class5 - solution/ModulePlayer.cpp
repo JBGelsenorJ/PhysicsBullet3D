@@ -164,12 +164,6 @@ update_status ModulePlayer::Update(float dt)
 		}
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
-	{
-		App->player->RespawnVehicle(vec3(CHECKPOINT_2), { 0, 1, 0, 0 });
-		App->scene_intro->startCountdown = true;
-	}
-
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
 		if (vehicle->GetKmh() >= 150)
@@ -254,4 +248,6 @@ void ModulePlayer::RestartGame() {
 	App->scene_intro->StopRenderBurguer = false;
 	App->scene_intro->checkpoints_index = 0;
 	for (uint i = 0; i < App->scene_intro->CheckPoints_List.Count(); i++) App->scene_intro->CheckPoints_List[i].color = White;
+	App->scene_intro->seconds = 30.0f;
+	App->scene_intro->startCountdown = false;
 }

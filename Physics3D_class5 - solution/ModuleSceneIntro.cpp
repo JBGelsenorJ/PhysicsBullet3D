@@ -234,6 +234,7 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	{
 		CheckPoints_List[2].color = Yellow;
 		checkpoints_index = 3;
+		startCountdown = true;
 	};
 
 	if (body1 == PB_BurguerSensor && body2 == (PhysBody3D*)App->player->vehicle)
