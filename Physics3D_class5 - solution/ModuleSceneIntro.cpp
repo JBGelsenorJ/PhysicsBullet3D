@@ -39,6 +39,8 @@ ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Modul
 	start = Cube(32, 5, 0.4);
 	start.color = LimeGreen;
 
+	minutes = 1;
+	seconds = 60.0f;
 }
 
 ModuleSceneIntro::~ModuleSceneIntro()
@@ -164,6 +166,8 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
+
+	if (startCountdown)TimeToLoseUpdate(dt);
 
 	Cube ground(2000, 1, 2000);
 	ground.SetPos(0, -1, 0);
@@ -402,4 +406,21 @@ Cylinder ModuleSceneIntro::CreateCylinder(float radius, float height, vec3 pos, 
 	cylinders.add(cy);
 
 	return cy;
+}
+
+void ModuleSceneIntro::TimeToLoseUpdate(float dt)
+{
+	if (minutes >= 0) {
+		seconds -= 1.0f * dt;
+
+		if (seconds <= 0)
+		{
+			seconds = 60.0f;
+			minutes -= 1;
+		}
+	}
+	else
+	{
+		endTime = true;
+	}
 }

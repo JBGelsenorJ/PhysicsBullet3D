@@ -168,9 +168,8 @@ update_status ModulePlayer::Update(float dt)
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 	{
-	
 		App->player->RespawnVehicle(vec3(CHECKPOINT_2), { 0, 1, 0, 0 });
-		
+		App->scene_intro->startCountdown = true;
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
@@ -213,7 +212,7 @@ update_status ModulePlayer::Update(float dt)
 	vehicle->Render();
 	
 	char title[80];
-	sprintf_s(title, "%.1f Km/h || Checkpoints: %i || Boxes Left: %i", vehicle->GetKmh(), App->scene_intro->checkpoints_index, App->scene_intro->boxes);
+	sprintf_s(title, "%.1f Km/h || Checkpoints: %i || Time: %i:%.1f || Boxes Left: %i", vehicle->GetKmh(), App->scene_intro->checkpoints_index, App->scene_intro->minutes, App->scene_intro->seconds, App->scene_intro->boxes);
 	App->window->SetTitle(title);
 
 	return UPDATE_CONTINUE;
@@ -231,7 +230,7 @@ void ModulePlayer::Nitro()
 	if (nitroTimer.Read() < 300)
 	{
 		if (vehicle->GetKmh() <= 150)
-			acceleration = MAX_ACCELERATION * 20;
+			acceleration = MAX_ACCELERATION * 10;
 		else
 			acceleration = 0;
 	}
