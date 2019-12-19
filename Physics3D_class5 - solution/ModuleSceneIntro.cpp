@@ -103,21 +103,30 @@ bool ModuleSceneIntro::Start()
 	CreateHinge({ 5.0f, 1.0f, 40.0f }, 1.0f, 1);
 	CreateHinge({ 5.0f, 1.0f, 100.0f }, 1.0f, -1);
 	CreateHinge({ 5.0f, 1.0f, 160.0f }, 1.0f, 1);
-	CreateHinge({ -8.0f, 1.0f, 220.0f }, 1.0f, -1);
-	CreateHinge({ -68.0f, 1.0f, 230.0f }, 2.0f, 1);
-	CreateHinge({-118.0f, 1.0f, 170.0f}, 2.0f, -1);
-	CreateHinge({ -68.0f, 1.0f, 170.0f }, 2.0f, 1);
-	CreateHinge({ -32.0f, 1.0f, 150.0f }, 2.0f, -1);
-	CreateHinge({ -60.0f, 1.0f, 110.0f }, 3.0f, 1);
-	CreateHinge({ -120.0f, 1.0f, 110.0f }, 3.0f, -1);
-	CreateHinge({ -180.0f, 1.0f, 110.0f }, 3.0f, 1);
-	CreateHinge({ -250.0f, 1.0f, 80.0f }, 4.0f, -1);
-	CreateHinge({ -180.0f, 1.0f, 50.0f }, 4.0f, 1);
-	CreateHinge({ -200.0f, 1.0f, -10.0f }, 5.0f, -1);
-	CreateHinge({ -100.0f, 1.0f, -10.0f }, 5.0f, 1);
+	CreateHinge({ -8.0f, 1.0f,225.0f }, 1.0f, -1);
+	CreateHinge({ -68.0f, 1.0f, 235.0f }, 2.0f, 1);
+	CreateHinge({ -175.0f, 1.0f, 200.0f }, 2.0f, -1);
+	CreateHinge({-118.0f, 1.0f, 165.0f}, 2.0f, -1);
+	CreateHinge({ -65.0f, 1.0f, 165.0f }, 2.0f, 1);
+	CreateHinge({ -55.0f, 1.0f, 110.0f }, 2.0f, -1);
+	CreateHinge({ -100.0f, 1.0f, 95.0f }, 3.0f, -1);
+	CreateHinge({ -180.0f, 1.0f, 95.0f }, 3.0f, 1);
+	CreateHinge({ -220.0f, 1.0f, 65.0f }, 4.0f, -1);
+	CreateHinge({ -180.0f, 1.0f, 26.0f }, 4.0f, 1);
+	CreateHinge({ -100.0f, 1.0f, 15.0f }, 5.0f, 1);
+	CreateHinge({ -90.0f, 1.0f, -20.0f }, 5.0f, -1);
+	CreateHinge({ -120.0f, 1.0f, -45.0f }, 5.0f, -1);
+	CreateHinge({ -200.0f, 1.0f, -50.0f }, 5.0f, -1);
+	CreateHinge({ -210.0f, 1.0f, -100.0f }, 5.0f, -1);
+	CreateHinge({ -150.0f, 1.0f, -115.0f }, 5.0f, -1);
+	CreateHinge({ -110.0f, 1.0f, -120.0f }, 5.0f, -1);
+	
 
 	//Create bridge
 	CreateRamp(5.0f, 0.25f, -70.0f, 0.0f, -25.0f, { 1, 0, 0 }, true);
+	CreateRamp(5.0f, 0.25f, -20.0f, 0.0f, 25.0f, { 1, 0, 0 }, true);
+
+	CreateRamp(-85.0f, 0.25f, -150.0f, 0.0f, 25.0f, { 1, 0, 0 }, true);
 	CreateRamp(5.0f, 0.25f, -20.0f, 0.0f, 25.0f, { 1, 0, 0 }, true);
 
 	return ret;
@@ -149,6 +158,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	shop2.SetPos(-90, 20, -405);
 	// roof
 	shop2.transform.rotate(90, vec3(1, 0, 0));
+	shop2.color = LimeGreen;
 	shop2.Render();
 
 	MercaWall1.Render();
