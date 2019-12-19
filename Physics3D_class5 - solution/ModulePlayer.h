@@ -10,6 +10,8 @@ struct PhysVehicle3D;
 #define TURN_DEGREES 15.0f * DEGTORAD
 #define BRAKE_POWER 100.0f
 #define START_POINT 5, 5, -120
+#define CHECKPOINT_0 5, 2.5, -100 
+#define CHECKPOINT_1 -50, 2.5, 135 
 
 class ModulePlayer : public Module
 {

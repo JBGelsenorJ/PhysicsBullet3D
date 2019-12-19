@@ -94,7 +94,7 @@ public:
 	Cube firstRamp;
 	Cube secondRamp;
 	uint counter;
-
+	uint checkpoints_index = 0;
 
 private:
 

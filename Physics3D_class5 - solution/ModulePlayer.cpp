@@ -143,6 +143,16 @@ update_status ModulePlayer::Update(float dt)
 	{
 		App->player->RespawnVehicle(vec3(START_POINT));	
 	}
+	
+	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
+	{
+		switch (App->scene_intro->checkpoints_index)
+		{
+		case 1:
+			App->player->RespawnVehicle(vec3(CHECKPOINT_0));
+			break;
+		}
+	}
 
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{

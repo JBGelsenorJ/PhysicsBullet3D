@@ -98,8 +98,10 @@ bool ModuleSceneIntro::Start()
 	CreateRect(-100.0f, 0, -200, roadWidth, 25, road, ORIENTATION::NORTH);
 
 	//Create CheckPoints
-	CreateCheckPoint({ 0.0f, 2.5f, -100.0f }, 90.0f);		//0
-	
+	CreateCheckPoint({ 5.0f, 2.5f, -100.0f }, 90.0f);		//0
+	CreateCheckPoint({ -50.0f, 2.5f, 135.0f }, 90.0f);
+	CreateCheckPoint({ -100.0f, 2.5f, -40.0f }, 90.0f);
+
 	//Create Boxes
 	SetBoxes({ 0.0f,10.0f,0.0f });
 
@@ -205,6 +207,12 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	if (body1 == SavePoints[0] && body2 == (PhysBody3D*)App->player->vehicle) {
 		CheckPoints_List[0].color = Yellow;
 		//TODO SAVE POSITION SPAWN
+		
+		switch (checkpoints_index) {
+		case 0:
+			checkpoints_index = 1;
+			break;
+		}
 	};
 }
 
