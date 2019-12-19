@@ -24,7 +24,9 @@ public:
 	update_status Update(float dt);
 	void Nitro();
 	bool CleanUp();
+	void RestartGame();
 	void RespawnVehicle(vec3 newPos, btQuaternion rotation);
+
 
 public:
 

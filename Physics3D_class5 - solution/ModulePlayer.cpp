@@ -141,11 +141,7 @@ update_status ModulePlayer::Update(float dt)
 	
 	if (App->input->GetKey(SDL_SCANCODE_F2)) 
 	{
-
-		App->player->RespawnVehicle(vec3(START_POINT), { 0, 0, 0, 1 });
-		App->scene_intro->boxes = 5;
-		App->scene_intro->checkpoints_index = 0;
-		for (uint i = 0; i < App->scene_intro->CheckPoints_List.Count(); i++) App->scene_intro->CheckPoints_List[i].color = White;
+		RestartGame();
 	}
 	
 	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
@@ -248,4 +244,12 @@ void ModulePlayer::RespawnVehicle(vec3 newPos, btQuaternion rotation)
 	vehicle->vehicle->getRigidBody()->setAngularVelocity({ 0, 0, 0 });
 	vehicle->vehicle->getRigidBody()->setLinearVelocity({ 0, 0, 0 });
 
+}
+
+void ModulePlayer::RestartGame() {
+	App->player->RespawnVehicle(vec3(START_POINT), { 0, 0 , 0, 1 });
+	App->scene_intro->boxes = 5;
+	App->scene_intro->checkpoints_index = 0;
+	App->scene_intro->box_position = 0;
+	for (uint i = 0; i < App->scene_intro->CheckPoints_List.Count(); i++) App->scene_intro->CheckPoints_List[i].color = White;
 }
