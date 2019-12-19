@@ -63,7 +63,7 @@ bool ModuleSceneIntro::Start()
 	MercaWall3.SetPos(-80, 0, -605);
 	MercaWall3pb = App->physics->AddBody(MercaWall3, 0.0f);
 
-
+	current_checkpoint = 0;
 	
 	Cube shelves(20, 25, 8);
 	shelves.color.Set(0.6f, 0.0f, 0.0f);
@@ -177,27 +177,48 @@ update_status ModuleSceneIntro::Update(float dt)
 		Traps[i].transform = transform;
 	}
 	//Render ramps
-	for (p2List_item<Cube>* ramp_item = ramp.getFirst(); ramp_item != nullptr; ramp_item = ramp_item->next)
-	{
-		ramp_item->data.Render();
-	}
+	for (p2List_item<Cube>* ramp_item = ramp.getFirst(); ramp_item != nullptr; ramp_item = ramp_item->next) ramp_item->data.Render();
+	
 
 	return UPDATE_CONTINUE;
 }
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
-	if (body1->is_sensor == true) {
-		
-		for (uint i = 0; i < SavePoints.Count(); i++){
-			if (body1 == SavePoints[i]) {
-				CheckPoints_List[i].color = Red;
-				body1->is_sensor = false;
+	if (body2->is_sensor == true)
+	{
+		if (body2 == SavePoints[0])
+		{
+			SavePoints[SavePoints.Count() - 1]->is_sensor = true;
+			CheckPoints_List[CheckPoints_List.Count() - 1].color = White;
+			//App->player->lap++;
+			LOG("GOLA");
+		}
+
+		for (uint i = 0; i < SavePoints.Count(); i++)
+		{
+			if (body2 == SavePoints[i])
+			{
+				if (i > current_checkpoint + 1)
+				{
+					LOG("HOLA");
+					//App->player->respawn(check_points[current_checkpoint]);
+					break;
+				}
+				else
+				{
+					current_checkpoint = i;
+					CheckPoints_List[2 * i].color = Yellow;
+					body2->is_sensor = false;
+					if (body2 == SavePoints[SavePoints.Count() - 1])
+						//changeAllCheckpoints();
+					break;
+
+				}
 			}
-			if (body1 == SavePoints[SavePoints.Count() - 1]) break;	
-		
 		}
 	}
+
 }
 
 void ModuleSceneIntro::CreateRect(const float& x, const float& y, const float& z, const float& width, const float& length, const Cube& cube, ORIENTATION orientation)
@@ -305,7 +326,7 @@ void ModuleSceneIntro::CheckBoxes() {
 void ModuleSceneIntro::CreateCheckPoint(const vec3 Position, float angle) {
 
 	Cube Sensor;
-	Sensor.size.Set(4.0f, 4.0f, roadWidth-5.0f);
+	Sensor.size.Set(4.0f, 4.0f, roadWidth);
 	Sensor.SetPos(Position.x, Position.y, Position.z);
 	Sensor.SetRotation(angle, { 0, 1, 0 });
 

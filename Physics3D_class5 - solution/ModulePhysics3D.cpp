@@ -211,6 +211,7 @@ PhysBody3D* ModulePhysics3D::AddBody(const Sphere& sphere, float mass, bool sens
 	btRigidBody* body = new btRigidBody(rbInfo);
 	PhysBody3D* pbody = new PhysBody3D(body);
 
+	pbody->is_sensor = sensor;
 	body->setUserPointer(pbody);
 	world->addRigidBody(body);
 	bodies.add(pbody);

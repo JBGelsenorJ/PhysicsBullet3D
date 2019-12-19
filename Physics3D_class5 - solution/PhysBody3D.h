@@ -31,7 +31,7 @@ private:
 
 public:
 	p2List<Module*> collision_listeners;
-	bool is_sensor = false;
+	bool is_sensor;
 };
 
 #endif // __PhysBody3D_H__

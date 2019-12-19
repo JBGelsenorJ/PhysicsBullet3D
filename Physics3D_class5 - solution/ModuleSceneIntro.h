@@ -64,6 +64,7 @@ public:
 	p2List<Cube*> Boxes_List;	
 	p2DynArray<Sphere> CheckPoints_List;
 	p2DynArray<PhysBody3D*> SavePoints;
+	uint current_checkpoint;
 	p2DynArray<Cube> Traps;
 	p2DynArray<PhysBody3D*> HingesBody;
 	p2List<Cube> ramp;
