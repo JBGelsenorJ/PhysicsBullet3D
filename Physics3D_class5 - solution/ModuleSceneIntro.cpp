@@ -35,6 +35,8 @@ ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Modul
 	MercaEntrance = Cube(15, 15, 10);
 
 	MercaEntrance.color = MercaWall1.color = MercaWall2.color = MercaWall3.color = LimeGreen;
+
+	counter = 0;
 }
 
 ModuleSceneIntro::~ModuleSceneIntro()
@@ -94,20 +96,10 @@ bool ModuleSceneIntro::Start()
 	CreateRect(-100.0f, 0, -200, roadWidth, 25, road, ORIENTATION::NORTH);
 
 	//Create CheckPoints
-	//CreateCheckPoint({ 0.0f,0.0f,20.0f }, 90.0f);
-	//CreateCheckPoint({ 0.0f, 0.0f, 120.0f }, 90.0f);
-	CreateCheckPoint({ 0.0f, 2.5f, -100.0f }, 90.0f);
-
-	cubitoprueba.size.Set(3.0f, 3.0f, 3.0f);
-	cubitoprueba.color = Red;
-	cubitoprueba.SetPos(5.0f, 1.0f, -110.0f);
-	PhysBody3D* testcube;
-	testcube = App->physics->AddBody(cubitoprueba,this,1.0f,false, PBType::CAR);
-	LOG("%i TYPE OF COLLIDER", testcube->PhysBody_Type);
-
+	CreateCheckPoint({ 0.0f, 2.5f, -100.0f }, 90.0f);		//0
+	
 	//Create Boxes
 	SetBoxes({ 0.0f,10.0f,0.0f });
-
 
 	//Hinges
 	CreateHinge({ 5.0f, 1.0f, 40.0f }, 1.0f, 1);
@@ -160,8 +152,6 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
-	cubitoprueba.Render();
-
 	Cube ground(2000, 1, 2000);
 
 	ground.SetPos(0, -1, 0);
@@ -199,7 +189,10 @@ update_status ModuleSceneIntro::Update(float dt)
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
-	if (body1->PhysBody_Type == PBType::CAR && body2->PhysBody_Type == PBType::CHECKPOINT) LOG("HOLAAAAA");
+	if (body1 == SavePoints[0] && body2 == (PhysBody3D*)App->player->vehicle) {
+		CheckPoints_List[0].color = Yellow;
+		//TODO SAVE POSITION SPAWN
+	};
 }
 
 void ModuleSceneIntro::CreateRect(const float& x, const float& y, const float& z, const float& width, const float& length, const Cube& cube, ORIENTATION orientation)
@@ -314,7 +307,7 @@ void ModuleSceneIntro::SetBoxes(const vec3 Position) {
 	box->color = Blue;
 	Boxes_List.add(box);
 
-	phys = App->physics->AddBody(*box, this, 0.0F, true);
+//	phys = App->physics->AddBody(*box, this, 0.0F, true);
 	map.PushBack(box);
 }
 
@@ -332,7 +325,9 @@ void ModuleSceneIntro::CreateCheckPoint(const vec3 Position, float angle) {
 	Sensor.SetPos(Position.x, Position.y, Position.z);
 	Sensor.SetRotation(angle, { 0, 1, 0 });
 
-	PhysBody3D* PhysBodySensor = App->physics->AddBody(Sensor, this, 0.0f, true, PBType::CHECKPOINT);
+	PhysBody3D* PhysBodySensor = App->physics->AddBody(Sensor, 0.0f, PBType::CHECKPOINT);
+	PhysBodySensor->SetAsSensor(true);
+	PhysBodySensor->collision_listeners.add(this);
 	LOG("TYPE IS %i", PhysBodySensor->PhysBody_Type);
 
 	Sphere CheckPointLight;

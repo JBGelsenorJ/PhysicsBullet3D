@@ -89,8 +89,7 @@ public:
 	mat4x4 transform;
 	Cube firstRamp;
 	Cube secondRamp;
-
-	Cube cubitoprueba;
+	uint counter;
 
 
 private:

@@ -8,7 +8,7 @@
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled), vehicle(NULL)
 {
 	turn = acceleration = brake = 0.0f;
-	Vehicle_Sensor.size.Set(3.0f, 3.0f, 3.0f);
+	//Vehicle_Sensor.size.Set(3.0f, 3.0f, 3.0f);
 }
 
 ModulePlayer::~ModulePlayer()
@@ -117,7 +117,10 @@ bool ModulePlayer::Start()
 	vehicle = App->physics->AddVehicle(car);
 	vehicle->SetPos(5, 5, -120);
 
-	Vehicle_PB = App->physics->AddBody(Vehicle_Sensor, this, 0.0f, false, PBType::CAR);
+	/*Vehicle_Sensor.size.Set(4.0f, 4.0f, 0.5f);
+	Vehicle_Sensor.SetPos(5.0f, 2.0f, -116.5f);
+	Vehicle_PB = App->physics->AddBody(Vehicle_Sensor, this, 0.0f, false, PBType::CAR);*/
+
 
 	return true;
 }
@@ -176,6 +179,8 @@ update_status ModulePlayer::Update(float dt)
 	vehicle->Turn(turn);
 	vehicle->Brake(brake);
 
+	
+
 	vehicle->Render();
 	
 	char title[80];
@@ -214,6 +219,5 @@ void ModulePlayer::RespawnVehicle(vec3 newPos)
 	vehicle->SetRotation({ 0, 0, 0, 1});
 	vehicle->vehicle->getRigidBody()->setAngularVelocity({ 0, 0, 0 });
 	vehicle->vehicle->getRigidBody()->setLinearVelocity({ 0, 0, 0 });
-
 
 }

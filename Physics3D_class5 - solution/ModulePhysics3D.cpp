@@ -211,7 +211,6 @@ PhysBody3D* ModulePhysics3D::AddBody(const Sphere& sphere, float mass, bool sens
 	btRigidBody* body = new btRigidBody(rbInfo);
 	PhysBody3D* pbody = new PhysBody3D(body);
 
-	pbody->is_sensor = sensor;
 	body->setUserPointer(pbody);
 	world->addRigidBody(body);
 	bodies.add(pbody);
@@ -239,40 +238,8 @@ PhysBody3D* ModulePhysics3D::AddBody(const Cube& cube, float mass, PBType type)
 
 	btRigidBody* body = new btRigidBody(rbInfo);
 	PhysBody3D* pbody = new PhysBody3D(body);
-	pbody->PhysBody_Type = type;
-	body->setUserPointer(pbody);
-	world->addRigidBody(body);
-	bodies.add(pbody);
-
-	return pbody;
-}
-
-PhysBody3D* ModulePhysics3D::AddBody(const Cube& cube, Module* listener, float mass, bool sensor, PBType type)
-{
-	btCollisionShape* colShape = new btBoxShape(btVector3(cube.size.x*0.5f, cube.size.y*0.5f, cube.size.z*0.5f));
-	shapes.add(colShape);
-
-	btTransform startTransform;
-	startTransform.setFromOpenGLMatrix(&cube.transform);
-
-	btVector3 localInertia(0, 0, 0);
-	if(mass != 0.f)
-		colShape->calculateLocalInertia(mass, localInertia);
-
-	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
-	motions.add(myMotionState);
-	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, colShape, localInertia);
-
-	btRigidBody* body = new btRigidBody(rbInfo);
-	PhysBody3D* pbody = new PhysBody3D(body);
 
 	pbody->PhysBody_Type = type;
-	pbody->is_sensor = sensor;
-	if (pbody->is_sensor == true)
-		body->setCollisionFlags(body->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
-	else
-		body->setCollisionFlags(body->getCollisionFlags() &~ btCollisionObject::CF_NO_CONTACT_RESPONSE);
-	pbody->collision_listeners.add(listener);
 	body->setUserPointer(pbody);
 	world->addRigidBody(body);
 	bodies.add(pbody);
@@ -300,7 +267,6 @@ PhysBody3D* ModulePhysics3D::AddBody(const Cylinder& cylinder, float mass, bool 
 	btRigidBody* body = new btRigidBody(rbInfo);
 	PhysBody3D* pbody = new PhysBody3D(body);
 
-	pbody->is_sensor = sensor;
 	body->setUserPointer(pbody);
 	world->addRigidBody(body);
 	bodies.add(pbody);
@@ -335,7 +301,7 @@ PhysVehicle3D* ModulePhysics3D::AddVehicle(const VehicleInfo& info)
 	btRigidBody* body = new btRigidBody(rbInfo);
 	body->setContactProcessingThreshold(BT_LARGE_FLOAT);
 	body->setActivationState(DISABLE_DEACTIVATION);
-
+	
 	world->addRigidBody(body);
 
 	btRaycastVehicle::btVehicleTuning tuning;
@@ -358,8 +324,8 @@ PhysVehicle3D* ModulePhysics3D::AddVehicle(const VehicleInfo& info)
 
 		vehicle->addWheel(conn, dir, axis, info.wheels[i].suspensionRestLength, info.wheels[i].radius, tuning, info.wheels[i].front);
 	}
+	
 	// ---------------------
-
 	PhysVehicle3D* pvehicle = new PhysVehicle3D(body, vehicle, info);
 	world->addVehicle(vehicle);
 	vehicles.add(pvehicle);

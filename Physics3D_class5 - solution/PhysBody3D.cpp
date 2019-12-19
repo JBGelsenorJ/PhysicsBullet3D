@@ -4,7 +4,9 @@
 
 // =================================================
 PhysBody3D::PhysBody3D(btRigidBody* body) : body(body)
-{}
+{
+	body->setUserPointer(this);
+}
 
 // ---------------------------------------------------------
 PhysBody3D::~PhysBody3D()
@@ -44,6 +46,17 @@ void PhysBody3D::SetPos(float x, float y, float z)
 	btTransform t = body->getWorldTransform();
 	t.setOrigin(btVector3(x, y, z));
 	body->setWorldTransform(t);
+}
+
+void PhysBody3D::GetPos(float& x, float& y, float& z){
+	btTransform t = body->getWorldTransform();
+	btVector3 origin = t.getOrigin();
+
+	x = (float)origin.getX();
+	y = (float)origin.getY();
+	z = (float)origin.getZ();
+
+	LOG("X: %i Y: %i Z: %i", x, y, z);
 }
 
 // ---------------------------------------------------------

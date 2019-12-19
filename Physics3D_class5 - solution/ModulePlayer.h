@@ -32,7 +32,8 @@ public:
 	Timer nitroTimer;
 	bool nitro = true;
 
-	Cube Vehicle_Sensor;
-	PhysBody3D* Vehicle_PB;
+
+	//Cube Vehicle_Sensor;
+	//PhysBody3D* Vehicle_PB;
 
 };
