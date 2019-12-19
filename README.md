@@ -21,12 +21,13 @@
 ### F2: Recolocate the car in case of crash/flip/getting outside the track
 ## Debug
 ### F1: See/unsee colliders
+### RightClick and drag to move freely the camera
 
 
 ## License 
 ### MIT License
 
-### Copyright (c) 2019 Ap011y0n, JBGelsenorJ & maciadalmau
+### Copyright (c) 2019 Germanins6, JBGelsenorJ & maciadalmau
 
 ### Permission is hereby granted, free of charge, to any person obtaining a copy
 ### of this software and associated documentation files (the "Software"), to deal
