@@ -104,8 +104,8 @@ bool ModuleSceneIntro::Start()
 	CreateCheckPoint({ -100.0f, 2.5f, -40.0f }, 90.0f);
 	CreateCheckPoint({ -90.0f, 2.5f, -250.0f }, 90.0f);
 
-	SetBurguer({ -90.0f,0.0f,-250.0f });
-	SetBurguerSensor({ -90.0f,2.5f,-250.0f });
+	SetBurguer({ -40.0f,0.0f,-480.0f });
+	SetBurguerSensor({ -40.0f,2.5f,-480.0f });
 
 	//Hinges
 	CreateHinge({ 5.0f, 1.0f, 40.0f }, 1.0f, 1);
