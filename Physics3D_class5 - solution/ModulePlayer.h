@@ -25,6 +25,7 @@ public:
 	void Nitro();
 	bool CleanUp();
 	void RespawnVehicle(vec3 newPos);
+	void RestartGame();
 
 public:
 

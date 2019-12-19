@@ -74,6 +74,7 @@ bool ModuleSceneIntro::Start()
 	Cube shelves(20, 25, 8);
 	shelves.color.Set(0.6f, 0.0f, 0.0f);
 
+	//Shelves
 	CreateRect(-145, 0, -205, 110, 1, MercaWall4, ORIENTATION::NORTH);
 	CreateRect(-145, 0, -235, 30, 20, shelves, ORIENTATION::SOUTH);
 	CreateRect(-145, 0, -215, 30, 20, shelves, ORIENTATION::SOUTH);
@@ -98,12 +99,11 @@ bool ModuleSceneIntro::Start()
 	CreateRect(-100.0f, 0, -200, roadWidth, 25, road, ORIENTATION::NORTH);
 
 	//Create CheckPoints
-	CreateCheckPoint({ 5.0f, 2.5f, -100.0f }, 90.0f);		//0
+	CreateCheckPoint({ 5.0f, 2.5f, -100.0f }, 90.0f);
 	CreateCheckPoint({ -50.0f, 2.5f, 135.0f }, 90.0f);
 	CreateCheckPoint({ -100.0f, 2.5f, -40.0f }, 90.0f);
 
-	//Create Boxes
-	SetBoxes({ 0.0f,10.0f,0.0f });
+	SetBox({ 0.0f,10.0f,0.0f });
 
 	//Hinges
 	CreateHinge({ 5.0f, 1.0f, 40.0f }, 1.0f, 1);
@@ -131,14 +131,12 @@ bool ModuleSceneIntro::Start()
 	//Create bridge
 	CreateRamp(5.0f, 0.25f, -70.0f, 0.0f, -25.0f, { 1, 0, 0 }, true);
 	CreateRamp(5.0f, 0.25f, -20.0f, 0.0f, 25.0f, { 1, 0, 0 }, true);
-
 	CreateRamp(-85.0f, 0.25f, -150.0f, 0.0f, 15.0f, { 1, 0, 0 }, true);
 	CreateRamp(-90.0f, 3.7f, -212.0f, 0.0f, -25.0f, { 1, 0, 0 }, true);
 
 	//Start 
 	Cylinder bar = CreateCylinder(0.5f, 35.0f, vec3(-10, 0, -111), Turquoise, true, 0.0f, vec3(0, 0, 0));
 	Cylinder bar2 = CreateCylinder(0.5f, 35.0f, vec3(20, 0, -111), Turquoise, true, 0.0f, vec3(0, 0, 0));
-	
 	start.SetPos(5, 20,-111);
 	startCube = App->physics->AddBody(start, 0.0f);
 	
@@ -183,6 +181,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	MercaWall3.Render();
 	MercaEntrance.Render();
 	start.Render();
+	box.Render();
 
 	//Render Map 
 	for (int i = 0; i < cubes.Count(); i++) cubes[i]->Render();
@@ -198,6 +197,9 @@ update_status ModuleSceneIntro::Update(float dt)
 	//Render ramps
 	for (p2List_item<Cube>* ramp_item = ramp.getFirst(); ramp_item != nullptr; ramp_item = ramp_item->next) ramp_item->data.Render();
 	for (p2List_item<Cylinder>* cylinders_item = cylinders.getFirst(); cylinders_item != nullptr; cylinders_item = cylinders_item->next) cylinders_item->data.Render();
+
+	//If you collected the 5 boxes you win and game restarts. Win condition
+	if(boxes == 0)App->player->RestartGame();
 	
 	return UPDATE_CONTINUE;
 }
@@ -222,8 +224,21 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		checkpoints_index = 2;
 	};
 
-	if (body1) {
+	if (body1 == pb_box && body2 == (PhysBody3D*)App->player->vehicle) {
+		switch (box_position) {
+		case 0:
 
+			break;
+		case 1: 
+			break;
+		case 2: 
+			break;
+		case 3:
+			break;
+		case 4:
+			break;
+		}
+		boxes--;
 	}
 }
 
@@ -330,17 +345,15 @@ void ModuleSceneIntro::CreateRamp(const float x, const float y, const float z, f
 
 }
 
-void ModuleSceneIntro::SetBoxes(const vec3 Position) {
-	Cube* box = new Cube;
-	PhysBody3D* phys = nullptr;
-
-	box->SetPos(Position.x, Position.y, Position.z);
-	box->size.Set(2.0f, 2.0f, 2.0f);
-	box->color = Blue;
-	//Boxes_List.add(box);
+void ModuleSceneIntro::SetBox(const vec3 Position) {
 	
-
-	cubes.PushBack(box);
+	box.SetPos(Position.x, Position.y, Position.z);
+	box.size.Set(2.0f, 2.0f, 2.0f);
+	box.color = Red;
+	
+	pb_box = App->physics->AddBody(box, 0.0f, PBType::BOX);
+	pb_box->SetAsSensor(true);
+	pb_box->collision_listeners.add(this);
 
 }
 
