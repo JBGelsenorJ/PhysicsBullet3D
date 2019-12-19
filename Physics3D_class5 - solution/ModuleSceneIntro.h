@@ -9,6 +9,7 @@
 
 struct PhysBody3D;
 struct PhysMotor3D;
+enum class PBType;
 
 enum class ORIENTATION
 {
@@ -89,6 +90,9 @@ public:
 	mat4x4 transform;
 	Cube firstRamp;
 	Cube secondRamp;
+
+	Cube cubitoprueba;
+
 
 private:
 

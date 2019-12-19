@@ -3,6 +3,7 @@
 #include "Globals.h"
 #include "p2List.h"
 #include "Primitive.h"
+#include "PhysBody3D.h"
 
 #include "Bullet/include/btBulletDynamicsCommon.h"
 
@@ -13,6 +14,7 @@ class DebugDrawer;
 struct PhysBody3D;
 struct PhysVehicle3D;
 struct VehicleInfo;
+
 
 class ModulePhysics3D : public Module
 {
@@ -28,10 +30,9 @@ public:
 	bool CleanUp();
 
 	PhysBody3D* AddBody(const Sphere& sphere, float mass = 1.0f, bool sensor = false);
-	PhysBody3D* AddBody(const Cube& cube, float mass = 1.0f);
-	PhysBody3D* AddBody(const Cube& cube, Module* listener, float mass = 1.0f, bool sensor = false);
+	PhysBody3D* AddBody(const Cube& cube, float mass = 1.0f, PBType type = PBType::NONE);
+	PhysBody3D* AddBody(const Cube& cube, Module* listener, float mass = 1.0f, bool sensor = false, PBType type = PBType::NONE);
 	PhysBody3D* AddBody(const Cylinder& cylinder, float mass = 1.0f, bool sensor = false);
-	PhysBody3D* AddBody(const Cube* cube, Module* listener, float mass, bool sensor);
 	PhysVehicle3D* AddVehicle(const VehicleInfo& info);
 
 	void AddConstraintP2P(PhysBody3D& bodyA, PhysBody3D& bodyB, const vec3& anchorA, const vec3& anchorB);

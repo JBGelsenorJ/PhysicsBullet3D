@@ -7,6 +7,13 @@
 class btRigidBody;
 class Module;
 
+enum class PBType {
+	NONE = -1,
+	CAR,
+	CHECKPOINT,
+	BOX
+};
+
 // =================================================
 struct PhysBody3D
 {
@@ -32,6 +39,7 @@ private:
 public:
 	p2List<Module*> collision_listeners;
 	bool is_sensor;
+	PBType PhysBody_Type = PBType::NONE;
 };
 
 #endif // __PhysBody3D_H__
