@@ -8,7 +8,7 @@
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled), vehicle(NULL)
 {
 	turn = acceleration = brake = 0.0f;
-	playerSensor = Cube(10, 10, 10);
+	Vehicle_Sensor.size.Set(3.0f, 3.0f, 3.0f);
 }
 
 ModulePlayer::~ModulePlayer()
@@ -117,7 +117,8 @@ bool ModulePlayer::Start()
 	vehicle = App->physics->AddVehicle(car);
 	vehicle->SetPos(5, 5, -120);
 
-	
+	Vehicle_PB = App->physics->AddBody(Vehicle_Sensor, this, 0.0f, false, PBType::CAR);
+
 	return true;
 }
 
@@ -134,8 +135,7 @@ update_status ModulePlayer::Update(float dt)
 {
 	turn = acceleration = brake = 0.0f;
 	VehicleInfo car;
-	playerSensor.SetPos(car.cabin_offset.x, car.cabin_offset.y, car.cabin_offset.z);
-	playercol = App->physics->AddBody(playerSensor, this, 0.0f, true);
+	
 	if (App->input->GetKey(SDL_SCANCODE_F2)) 
 	{
 		App->player->RespawnVehicle(vec3(START_POINT));	
@@ -147,8 +147,6 @@ update_status ModulePlayer::Update(float dt)
 			acceleration = 0;
 		else
 			acceleration = MAX_ACCELERATION;
-			
-		
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)

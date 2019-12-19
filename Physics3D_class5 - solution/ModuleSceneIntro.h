@@ -34,7 +34,8 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
-	void CreateRect(const float& x, const float& y, const float& z, const float& width, const float& length, const Cube& cube, ORIENTATION orientation = ORIENTATION::NORTH);
+	void CreateRect(const float& x, const float& y, const float& z, const float& width, const float& length, const Cube& cube, ORIENTATION orientation = ORIENTATION::NORTH);	
+	void CreateRamp(const float x, const float y, const float z, float mass, float angle, vec3 angle_rot, bool is_collider);
 	void CreateCurve(const float& x, const float& y, const float& z, const float& width, const float& angle_i, const float& angle_f, const Cube& cube, const float& radius);
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
@@ -43,8 +44,7 @@ public:
 	void CheckBoxes();
 	void CreateCheckPoint(const vec3 Position, float angle);
 	void CreateHinge(vec3 Position, float speed, int way);
-	void RenderHinge(Cube helix, Cube axis);
-	void CreateRamp(const float x, const float y, const float z, float mass, float angle, vec3 angle_rot, bool is_collider);
+	void RenderMap();
 public:
 
 	p2DynArray <Cube*> map;
@@ -65,7 +65,6 @@ public:
 	p2List<Cube*> Boxes_List;	
 	p2DynArray<Sphere> CheckPoints_List;
 	p2DynArray<PhysBody3D*> SavePoints;
-	uint current_checkpoint;
 	p2DynArray<Cube> Traps;
 	p2DynArray<PhysBody3D*> HingesBody;
 	p2List<Cube> ramp;

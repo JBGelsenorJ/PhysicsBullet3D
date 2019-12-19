@@ -33,10 +33,8 @@ ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Modul
 	MercaWall2 = Cube(400, 40, 1);
 	MercaWall3 = Cube(210, 40, 1);
 	MercaEntrance = Cube(15, 15, 10);
-	MercaEntrance.color = LimeGreen;
-	MercaWall1.color = LimeGreen;
-	MercaWall2.color = LimeGreen;
-	MercaWall3.color = LimeGreen;
+
+	MercaEntrance.color = MercaWall1.color = MercaWall2.color = MercaWall3.color = LimeGreen;
 }
 
 ModuleSceneIntro::~ModuleSceneIntro()
@@ -65,8 +63,6 @@ bool ModuleSceneIntro::Start()
 
 	MercaWall3.SetPos(-80, 0, -605);
 	MercaWall3pb = App->physics->AddBody(MercaWall3, 0.0f);
-
-	current_checkpoint = 0;
 	
 	MercaEntrance.SetPos(-90,0,-200);
 	MercaEntrancepb = App->physics->AddBody(MercaEntrance, 0.0f);
@@ -155,6 +151,8 @@ bool ModuleSceneIntro::CleanUp()
 	for (uint i = 0; i < map.Count(); ++i) delete map[i];
 
 	ramp.clear();
+
+	//TODO: MEMORY LEAKS
 
 	return true;
 }
@@ -285,6 +283,28 @@ void ModuleSceneIntro::CreateCurve(const float& x, const float& y, const float& 
 
 }
 
+void ModuleSceneIntro::CreateRamp(const float x, const float y, const float z, float mass, float angle, vec3 angle_rot, bool is_collider)
+{
+
+	Cube cube;
+	cube.size.Set(20, 0.5, 20);
+	cube.color = Turquoise;
+	cube.SetPos(x, y, z);
+
+	if (angle != 0.0f)
+	{
+		cube.SetRotation(angle, angle_rot);
+	}
+
+	if (is_collider)
+	{
+		App->physics->AddBody(cube, mass);
+	}
+
+	ramp.add(cube);
+
+}
+
 void ModuleSceneIntro::SetBoxes(const vec3 Position) {
 	Cube* box = new Cube;
 	PhysBody3D* phys = nullptr;
@@ -303,7 +323,6 @@ void ModuleSceneIntro::CheckBoxes() {
 	//This function will check last box that have been triggered and will store data of spawn if user press any key 
 	//p2List_item<Cube*> Actual_Cubes = Boxes_List;
 
-	//TODO: SHOULD READ EACH CHECKPOINT STORED
 }
 
 void ModuleSceneIntro::CreateCheckPoint(const vec3 Position, float angle) {
@@ -347,26 +366,4 @@ void ModuleSceneIntro::CreateHinge(vec3 Position, float speed, int way) {
 
 	hinge = App->physics->AddConstraintHinge(*bodyA, *bodyB, vec3(0, 0, 0), vec3(5, 0, 0), vec3(0, way, 0), vec3(0, 1, 0), true);
 	hinge->enableAngularMotor(true, speed, INFINITE);
-}
-
-void ModuleSceneIntro::CreateRamp(const float x, const float y, const float z, float mass, float angle, vec3 angle_rot, bool is_collider)
-{
-	
-	Cube cube;
-	cube.size.Set(20, 0.5, 20);
-	cube.color = Turquoise;
-	cube.SetPos(x, y, z);
-	
-	if (angle != 0.0f)
-	{
-		cube.SetRotation(angle, angle_rot);
-	}
-
-	if (is_collider)
-	{
-		App->physics->AddBody(cube, mass);
-	}
-
-	ramp.add(cube);
-
 }
