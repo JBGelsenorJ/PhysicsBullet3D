@@ -204,15 +204,22 @@ update_status ModuleSceneIntro::Update(float dt)
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
-	if (body1 == SavePoints[0] && body2 == (PhysBody3D*)App->player->vehicle) {
+	if (body1 == SavePoints[0] && body2 == (PhysBody3D*)App->player->vehicle)
+	{
 		CheckPoints_List[0].color = Yellow;
-		//TODO SAVE POSITION SPAWN
-		
-		switch (checkpoints_index) {
-		case 0:
-			checkpoints_index = 1;
-			break;
-		}
+		checkpoints_index = 0;
+	};
+
+	if (body1 == SavePoints[1] && body2 == (PhysBody3D*)App->player->vehicle)
+	{
+		CheckPoints_List[1].color = Yellow;
+		checkpoints_index = 1;
+	};
+
+	if (body1 == SavePoints[2] && body2 == (PhysBody3D*)App->player->vehicle)
+	{
+		CheckPoints_List[2].color = Yellow;
+		checkpoints_index = 2;
 	};
 }
 
@@ -347,7 +354,8 @@ void ModuleSceneIntro::CreateCheckPoint(const vec3 Position, float angle) {
 	Sensor.SetPos(Position.x, Position.y, Position.z);
 	Sensor.SetRotation(angle, { 0, 1, 0 });
 
-	PhysBody3D* PhysBodySensor = App->physics->AddBody(Sensor, 0.0f, PBType::CHECKPOINT);
+	PhysBody3D* PhysBodySensor = nullptr;
+	PhysBodySensor = App->physics->AddBody(Sensor, 0.0f, PBType::CHECKPOINT);
 	PhysBodySensor->SetAsSensor(true);
 	PhysBodySensor->collision_listeners.add(this);
 	LOG("TYPE IS %i", PhysBodySensor->PhysBody_Type);

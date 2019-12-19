@@ -148,8 +148,14 @@ update_status ModulePlayer::Update(float dt)
 	{
 		switch (App->scene_intro->checkpoints_index)
 		{
-		case 1:
+		case 0:
 			App->player->RespawnVehicle(vec3(CHECKPOINT_0));
+			break;
+		case 1:
+			App->player->RespawnVehicle(vec3(CHECKPOINT_1));
+			break;
+		case 2:
+			App->player->RespawnVehicle(vec3(CHECKPOINT_2));
 			break;
 		}
 	}
