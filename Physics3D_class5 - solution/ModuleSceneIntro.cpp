@@ -28,9 +28,12 @@ ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Modul
 	MercaWall2pb = nullptr;
 	MercaWall3pb = nullptr;
 	MercaWall4pb = nullptr;
+	MercaEntrancepb = nullptr;
 	MercaWall1 = Cube(400, 40, 1);
 	MercaWall2 = Cube(400, 40, 1);
 	MercaWall3 = Cube(210, 40, 1);
+	MercaEntrance = Cube(15, 15, 10);
+	MercaEntrance.color = LimeGreen;
 	MercaWall1.color = LimeGreen;
 	MercaWall2.color = LimeGreen;
 	MercaWall3.color = LimeGreen;
@@ -50,7 +53,7 @@ bool ModuleSceneIntro::Start()
 	bool ret = true;
 
 
-	Cube shop1(100, 40, 1);
+	Cube MercaWall4(100, 40, 1);
 
 	MercaWall1.SetPos(-185, 0, -405);
 	MercaWall1.transform.rotate(90, vec3(0, 1, 0));
@@ -63,12 +66,13 @@ bool ModuleSceneIntro::Start()
 	MercaWall3.SetPos(-80, 0, -605);
 	MercaWall3pb = App->physics->AddBody(MercaWall3, 0.0f);
 
+	MercaEntrance.SetPos(-90,0,-200);
+	MercaEntrancepb = App->physics->AddBody(MercaEntrance, 0.0f);
 
-	
 	Cube shelves(20, 25, 8);
 	shelves.color.Set(0.6f, 0.0f, 0.0f);
 
-	CreateRect(-145, 0, -205, 110, 1, shop1, ORIENTATION::NORTH);
+	CreateRect(-145, 0, -205, 110, 1, MercaWall4, ORIENTATION::NORTH);
 	CreateRect(-145, 0, -235, 30, 20, shelves, ORIENTATION::SOUTH);
 	CreateRect(-145, 0, -215, 30, 20, shelves, ORIENTATION::SOUTH);
 	CreateRect(-65, 0, -235, 30, 20, shelves, ORIENTATION::SOUTH);
@@ -88,8 +92,8 @@ bool ModuleSceneIntro::Start()
 	CreateRect(-180, 0, -60, roadWidth, 30, road, ORIENTATION::WEST);
 	CreateCurve(-180.0f, 0.0f, -80, roadWidth, 90, 270, roadForCurve, radius);
 	CreateRect(-180, 0, -130, roadWidth, 30, road, ORIENTATION::WEST);
-	CreateCurve(-120.0f, 0, -150, roadWidth, 0, 90, roadForCurve, radius);
-	CreateRect(-100.0f, 0, -200, roadWidth, 25, road, ORIENTATION::NORTH);
+	/*CreateCurve(-120.0f, 0, -150, roadWidth, 0, 90, roadForCurve, radius);
+	CreateRect(-100.0f, 0, -200, roadWidth, 25, road, ORIENTATION::NORTH);*/
 
 	//Create CheckPoints
 	CreateCheckPoint({ 0.0f,0.0f,20.0f }, 90.0f);
@@ -126,8 +130,8 @@ bool ModuleSceneIntro::Start()
 	CreateRamp(5.0f, 0.25f, -70.0f, 0.0f, -25.0f, { 1, 0, 0 }, true);
 	CreateRamp(5.0f, 0.25f, -20.0f, 0.0f, 25.0f, { 1, 0, 0 }, true);
 
-	CreateRamp(-85.0f, 0.25f, -150.0f, 0.0f, 25.0f, { 1, 0, 0 }, true);
-	CreateRamp(5.0f, 0.25f, -20.0f, 0.0f, 25.0f, { 1, 0, 0 }, true);
+	CreateRamp(-85.0f, 0.25f, -150.0f, 0.0f, 15.0f, { 1, 0, 0 }, true);
+	CreateRamp(-90.0f, 3.7f, -212.0f, 0.0f, -25.0f, { 1, 0, 0 }, true);
 
 	return ret;
 }
@@ -164,6 +168,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	MercaWall1.Render();
 	MercaWall2.Render();
 	MercaWall3.Render();
+	MercaEntrance.Render();
 
 	//Render Map 
 	for (int i = 0; i < map.Count(); i++) map[i]->Render();
@@ -348,7 +353,7 @@ void ModuleSceneIntro::CreateRamp(const float x, const float y, const float z, f
 {
 	
 	Cube cube;
-	cube.size.Set(22, 0.5, 20);
+	cube.size.Set(20, 0.5, 20);
 	cube.color = Turquoise;
 	cube.SetPos(x, y, z);
 	
