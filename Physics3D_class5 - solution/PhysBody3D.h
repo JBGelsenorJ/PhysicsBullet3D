@@ -11,7 +11,7 @@ enum class PBType {
 	NONE = -1,
 	CAR,
 	CHECKPOINT,
-	BOX
+	BURGUER
 };
 
 // =================================================

@@ -24,6 +24,14 @@ enum class ORIENTATION
 	SOUTHWEST
 };
 
+struct Burguer {
+	Cube* top_bread;
+	Cylinder* tomato;
+	Cylinder* meat;
+	Cube* Lettuce;
+	Cube* bottom_bread;
+};
+
 class ModuleSceneIntro : public Module
 {
 public:
@@ -40,7 +48,7 @@ public:
 	void CreateCurve(const float& x, const float& y, const float& z, const float& width, const float& angle_i, const float& angle_f, const Cube& cube, const float& radius);
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
-	void SetBox(const vec3);
+	void SetBurguer(const vec3);
 	void CreateCheckPoint(const vec3 Position, float angle);
 	void CreateHinge(vec3 Position, float speed, int way);
 	void TimeToLoseUpdate(float dt);
@@ -80,9 +88,6 @@ public:
 	PhysBody3D* MercaEntrancepb = nullptr;
 	Cube start;
 	PhysBody3D* startCube = nullptr;
-	Cube box;
-	PhysBody3D* pb_box = nullptr;
-	int box_position = 0;
 
 	//Hinges
 	PhysBody3D* bodyA = nullptr;
@@ -96,6 +101,7 @@ public:
 	uint counter;
 	uint checkpoints_index = 0;
 	int boxes = 5;
+	Burguer Hamburguer;
 
 	int minutes = 0;
 	float seconds = 0;

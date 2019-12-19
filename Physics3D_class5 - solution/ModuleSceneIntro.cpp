@@ -229,21 +229,7 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		checkpoints_index = 3;
 	};
 
-	if (body1 == pb_box && body2 == (PhysBody3D*)App->player->vehicle) {
-		switch (box_position) {
-		case 0:
-			break;
-		case 1: 
-			break;
-		case 2: 
-			break;
-		case 3:
-			break;
-		case 4:
-			break;
-		}
-		boxes--;
-	}
+	//if (body1 == pb_box && body2 == (PhysBody3D*)App->player->vehicle)
 
 }
 
@@ -350,16 +336,35 @@ void ModuleSceneIntro::CreateRamp(const float x, const float y, const float z, f
 
 }
 
-void ModuleSceneIntro::SetBox(const vec3 Position) {
+void ModuleSceneIntro::SetBurguer(const vec3 Position) {
 	
-	box.SetPos(Position.x, Position.y, Position.z);
-	box.size.Set(2.0f, 2.0f, 2.0f);
-	box.color = Red;
-	
-	pb_box = App->physics->AddBody(box, 0.0f, PBType::BOX);
-	pb_box->SetAsSensor(true);
-	pb_box->collision_listeners.add(this);
+	Hamburguer.top_bread = new Cube(2.0f, 0.5f, 2.0f);
+	Hamburguer.top_bread->color = BreadColor;
+	cubes.PushBack(Hamburguer.top_bread);
+	Hamburguer.top_bread->SetPos({ Position.x, Position.y, Position.z });
 
+	Hamburguer.Lettuce = new Cube(2.0f, 0.1f, 2.0f);
+	Hamburguer.Lettuce->color = LettuceColor;
+	cubes.PushBack(Hamburguer.Lettuce);
+	Hamburguer.top_bread->SetPos({ Position.x, Position.y, Position.z });
+
+
+	Hamburguer.meat = new Cylinder(2.0f, 0.5f);
+	Hamburguer.meat->color = MeatColor;
+	cubes.PushBack(Hamburguer.meat);
+	Hamburguer.top_bread->SetPos({ Position.x, Position.y, Position.z });
+
+
+	Hamburguer.tomato = new Cylinder(2.0f, 0.1f);
+	Hamburguer.tomato->color = TomatoColor;
+	cubes.PushBack(Hamburguer.tomato);
+	Hamburguer.top_bread->SetPos({ Position.x, Position.y, Position.z });
+
+
+	Hamburguer.bottom_bread = new Cube(2.0f, 0.5f, 2.0f);
+	Hamburguer.bottom_bread->color = BreadColor;
+	cubes.PushBack(Hamburguer.bottom_bread);
+	Hamburguer.top_bread->SetPos({ Position.x, Position.y, Position.z });
 }
 
 void ModuleSceneIntro::CreateCheckPoint(const vec3 Position, float angle) {
