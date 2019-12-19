@@ -36,7 +36,7 @@ public:
 	float brake;
 	Timer nitroTimer;
 	bool nitro = true;
-
+	uint winFx;
 
 	//Cube Vehicle_Sensor;
 	//PhysBody3D* Vehicle_PB;

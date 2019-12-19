@@ -236,9 +236,11 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		checkpoints_index = 3;
 	};
 
-	if (body1 == PB_BurguerSensor && body2 == (PhysBody3D*)App->player->vehicle) {
+	if (body1 == PB_BurguerSensor && body2 == (PhysBody3D*)App->player->vehicle)
+	{
 		StopRenderBurguer = true;
 		HamburguerNumber--;
+		App->audio->PlayFx(App->player->winFx);
 	}
 
 }

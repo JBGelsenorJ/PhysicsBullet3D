@@ -121,6 +121,7 @@ bool ModulePlayer::Start()
 	Vehicle_Sensor.SetPos(5.0f, 2.0f, -116.5f);
 	Vehicle_PB = App->physics->AddBody(Vehicle_Sensor, this, 0.0f, false, PBType::CAR);*/
 
+	winFx = App->audio->LoadFx("Audio/Fx/Homer.wav");
 
 	return true;
 }
