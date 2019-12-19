@@ -192,14 +192,15 @@ update_status ModuleSceneIntro::Update(float dt)
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
-	if (body2->is_sensor == true)
+	if (body1 == App->player->playercol && body2->is_sensor == true)
 	{
+		LOG("GOLA");
 		if (body2 == SavePoints[0])
 		{
 			SavePoints[SavePoints.Count() - 1]->is_sensor = true;
 			CheckPoints_List[CheckPoints_List.Count() - 1].color = White;
 			//App->player->lap++;
-			LOG("GOLA");
+		
 		}
 
 		for (uint i = 0; i < SavePoints.Count(); i++)

@@ -29,7 +29,8 @@ public:
 	float turn;
 	float acceleration;
 	float brake;
-
+	PhysBody3D* playercol;
+	Cube playerSensor;
 	Timer nitroTimer;
 	bool nitro = true;
 };
