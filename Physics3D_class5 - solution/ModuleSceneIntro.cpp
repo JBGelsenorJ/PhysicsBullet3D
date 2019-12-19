@@ -211,7 +211,11 @@ update_status ModuleSceneIntro::Update(float dt)
 
 	//If you collected the 5 boxes you win and game restarts. Win condition
 	if(HamburguerNumber == 0)App->player->RestartGame();
-	
+	//Lose condition
+	if (endTime) {
+		//App->audio->PlayFx(App->player->winFx);
+		App->player->RestartGame();
+	}
 	return UPDATE_CONTINUE;
 }
 
