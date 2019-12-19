@@ -211,6 +211,7 @@ update_status ModulePlayer::Update(float dt)
 	sprintf_s(title, "%.1f Km/h || Checkpoints: %i || Time: %.1f || Hamburguer To Collect: %i", vehicle->GetKmh(), App->scene_intro->checkpoints_index, App->scene_intro->seconds, App->scene_intro->HamburguerNumber);
 	App->window->SetTitle(title);
 
+
 	return UPDATE_CONTINUE;
 }
 

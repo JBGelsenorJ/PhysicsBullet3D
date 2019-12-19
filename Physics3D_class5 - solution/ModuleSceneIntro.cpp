@@ -104,7 +104,8 @@ bool ModuleSceneIntro::Start()
 	CreateCheckPoint({ -100.0f, 2.5f, -40.0f }, 90.0f);
 	CreateCheckPoint({ -90.0f, 2.5f, -250.0f }, 90.0f);
 
-	SetBurguer({ 0.0f,0.0f,0.0f });
+	SetBurguer({ -90.0f,0.0f,-250.0f });
+	SetBurguerSensor({ -90.0f,2.5f,-250.0f });
 
 	//Hinges
 	CreateHinge({ 5.0f, 1.0f, 40.0f }, 1.0f, 1);
@@ -184,8 +185,14 @@ update_status ModuleSceneIntro::Update(float dt)
 	MercaWall3.Render();
 	MercaEntrance.Render();
 	start.Render();
-	Hamburguer.tomato->Render();
-	Hamburguer.meat->Render();
+
+	if (!StopRenderBurguer) {
+		Hamburguer.top_bread->Render();
+		Hamburguer.Lettuce->Render();
+		Hamburguer.tomato->Render();
+		Hamburguer.meat->Render();
+		Hamburguer.bottom_bread->Render();
+	}
 
 	//Render Map 
 	for (int i = 0; i < cubes.Count(); i++) cubes[i]->Render();
@@ -229,7 +236,10 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		checkpoints_index = 3;
 	};
 
-	//if (body1 == pb_box && body2 == (PhysBody3D*)App->player->vehicle)
+	if (body1 == PB_BurguerSensor && body2 == (PhysBody3D*)App->player->vehicle) {
+		StopRenderBurguer = true;
+		HamburguerNumber--;
+	}
 
 }
 
@@ -340,12 +350,10 @@ void ModuleSceneIntro::SetBurguer(const vec3 Position) {
 	
 	Hamburguer.top_bread = new Cube(2.0f, 0.5f, 2.0f);
 	Hamburguer.top_bread->color = BreadColor;
-	cubes.PushBack(Hamburguer.top_bread);
 	Hamburguer.top_bread->SetPos( Position.x, Position.y + 3.3f, Position.z );
 
 	Hamburguer.Lettuce = new Cube(2.0f, 0.1f, 2.0f);
 	Hamburguer.Lettuce->color = LettuceColor;
-	cubes.PushBack(Hamburguer.Lettuce);
 	Hamburguer.Lettuce->SetPos( Position.x, Position.y + 2.95f, Position.z );
 
 	Hamburguer.meat = new Cylinder(1.0f, 0.5f);
@@ -361,8 +369,16 @@ void ModuleSceneIntro::SetBurguer(const vec3 Position) {
 
 	Hamburguer.bottom_bread = new Cube(2.0f, 0.5f, 2.0f);
 	Hamburguer.bottom_bread->color = BreadColor;
-	cubes.PushBack(Hamburguer.bottom_bread);
 	Hamburguer.bottom_bread->SetPos( Position.x, Position.y+2.4f, Position.z);
+}
+
+void ModuleSceneIntro::SetBurguerSensor(vec3 Position) {
+	BurguerSensor.size.Set(3.0f, 3.0f, 3.0f);
+	BurguerSensor.SetPos(Position.x, Position.y, Position.z);
+
+	PB_BurguerSensor = App->physics->AddBody(BurguerSensor, 0.0f, PBType::BURGUER);
+	PB_BurguerSensor->SetAsSensor(true);
+	PB_BurguerSensor->collision_listeners.add(this);
 }
 
 void ModuleSceneIntro::CreateCheckPoint(const vec3 Position, float angle) {
@@ -376,7 +392,6 @@ void ModuleSceneIntro::CreateCheckPoint(const vec3 Position, float angle) {
 	PhysBodySensor = App->physics->AddBody(Sensor, 0.0f, PBType::CHECKPOINT);
 	PhysBodySensor->SetAsSensor(true);
 	PhysBodySensor->collision_listeners.add(this);
-	LOG("TYPE IS %i", PhysBodySensor->PhysBody_Type);
 
 	Sphere CheckPointLight;
 	CheckPointLight.radius = 1.0f;

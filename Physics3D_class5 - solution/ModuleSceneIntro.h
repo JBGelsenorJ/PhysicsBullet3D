@@ -49,6 +49,8 @@ public:
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
 	void SetBurguer(const vec3);
+	void SetBurguerSensor(vec3 Position);
+
 	void CreateCheckPoint(const vec3 Position, float angle);
 	void CreateHinge(vec3 Position, float speed, int way);
 	void TimeToLoseUpdate(float dt);
@@ -100,9 +102,15 @@ public:
 	Cube secondRamp;
 	uint counter;
 	uint checkpoints_index = 0;
-	int HamburguerNumber = 1;
-	Burguer Hamburguer;
 
+	//Burguer Structure
+	Cube BurguerSensor;
+	PhysBody3D* PB_BurguerSensor = nullptr;
+	Burguer Hamburguer;
+	int HamburguerNumber = 1;
+	bool StopRenderBurguer = false;
+	
+	//Timer
 	int minutes = 0;
 	float seconds = 0;
 	bool endTime = false;
