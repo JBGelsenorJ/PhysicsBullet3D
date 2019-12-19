@@ -12,6 +12,7 @@ struct PhysVehicle3D;
 #define START_POINT 5, 5, -120
 #define CHECKPOINT_0 -50, 2.5, 135 
 #define CHECKPOINT_1 -100, 2.5, -40.0 
+#define CHECKPOINT_2 -90.0, 2.5, -250
 
 class ModulePlayer : public Module
 {

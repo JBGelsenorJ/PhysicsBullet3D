@@ -100,6 +100,7 @@ bool ModuleSceneIntro::Start()
 	//Create CheckPoints
 	CreateCheckPoint({ -50.0f, 2.5f, 135.0f }, 90.0f);
 	CreateCheckPoint({ -100.0f, 2.5f, -40.0f }, 90.0f);
+	CreateCheckPoint({ -90.0f, 2.5f, -250.0f }, 90.0f);
 
 	//Create Boxes
 	SetBoxes({ 0.0f,10.0f,0.0f });
@@ -216,9 +217,11 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		checkpoints_index = 2;
 	};
 
-	if (body1) {
-
-	}
+	if (body1 == SavePoints[2] && body2 == (PhysBody3D*)App->player->vehicle)
+	{
+		CheckPoints_List[2].color = Yellow;
+		checkpoints_index = 3;
+	};
 }
 
 void ModuleSceneIntro::CreateRect(const float& x, const float& y, const float& z, const float& width, const float& length, const Cube& cube, ORIENTATION orientation)
