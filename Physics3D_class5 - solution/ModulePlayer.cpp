@@ -142,6 +142,10 @@ update_status ModulePlayer::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F2)) 
 	{
 		App->player->RespawnVehicle(vec3(START_POINT));	
+		App->scene_intro->boxes = 5;
+		App->scene_intro->checkpoints_index = 0;
+		for (uint i = 0; i < App->scene_intro->CheckPoints_List.Count(); i++) App->scene_intro->CheckPoints_List[i].color = White;
+
 	}
 	
 	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
@@ -200,7 +204,7 @@ update_status ModulePlayer::Update(float dt)
 	vehicle->Render();
 	
 	char title[80];
-	sprintf_s(title, "%.1f Km/h", vehicle->GetKmh());
+	sprintf_s(title, "%.1f Km/h || Checkpoints: %i || Boxes Left: %i", vehicle->GetKmh(), App->scene_intro->checkpoints_index, App->scene_intro->boxes);
 	App->window->SetTitle(title);
 
 	return UPDATE_CONTINUE;

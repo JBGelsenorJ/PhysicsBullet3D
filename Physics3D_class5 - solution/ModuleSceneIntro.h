@@ -40,12 +40,10 @@ public:
 	void CreateCurve(const float& x, const float& y, const float& z, const float& width, const float& angle_i, const float& angle_f, const Cube& cube, const float& radius);
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
-	//This function will create and set all boxes in map, later will be added to a item list
 	void SetBoxes(const vec3);
-	void CheckBoxes();
 	void CreateCheckPoint(const vec3 Position, float angle);
 	void CreateHinge(vec3 Position, float speed, int way);
-	void RenderMap();
+
 public:
 
 	PhysBody3D* pb_chassis;
@@ -61,7 +59,9 @@ public:
 	PhysMotor3D* right_wheel;
 
 	//Will be used to store all box information that we will spawn in map. Color_Pos_Sensors...
-	p2List<Cube*> Boxes_List;	
+	
+	Cube BoxesArray[5];
+
 	p2DynArray<Sphere> CheckPoints_List;
 	p2DynArray<PhysBody3D*> SavePoints;
 	p2DynArray<Cube> Traps;
@@ -95,6 +95,7 @@ public:
 	Cube secondRamp;
 	uint counter;
 	uint checkpoints_index = 0;
+	int boxes = 6;
 
 private:
 

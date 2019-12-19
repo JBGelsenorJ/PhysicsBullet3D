@@ -221,6 +221,10 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		CheckPoints_List[2].color = Yellow;
 		checkpoints_index = 2;
 	};
+
+	if (body1) {
+
+	}
 }
 
 void ModuleSceneIntro::CreateRect(const float& x, const float& y, const float& z, const float& width, const float& length, const Cube& cube, ORIENTATION orientation)
@@ -333,17 +337,10 @@ void ModuleSceneIntro::SetBoxes(const vec3 Position) {
 	box->SetPos(Position.x, Position.y, Position.z);
 	box->size.Set(2.0f, 2.0f, 2.0f);
 	box->color = Blue;
-	Boxes_List.add(box);
-
+	//Boxes_List.add(box);
+	
 
 	cubes.PushBack(box);
-
-}
-
-void ModuleSceneIntro::CheckBoxes() {
-
-	//This function will check last box that have been triggered and will store data of spawn if user press any key 
-	//p2List_item<Cube*> Actual_Cubes = Boxes_List;
 
 }
 
