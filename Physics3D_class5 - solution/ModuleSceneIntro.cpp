@@ -94,8 +94,8 @@ bool ModuleSceneIntro::Start()
 	CreateRect(-180, 0, -60, roadWidth, 30, road, ORIENTATION::WEST);
 	CreateCurve(-180.0f, 0.0f, -80, roadWidth, 90, 270, roadForCurve, radius);
 	CreateRect(-180, 0, -130, roadWidth, 30, road, ORIENTATION::WEST);
-	/*CreateCurve(-120.0f, 0, -150, roadWidth, 0, 90, roadForCurve, radius);
-	CreateRect(-100.0f, 0, -200, roadWidth, 25, road, ORIENTATION::NORTH);*/
+	CreateCurve(-120.0f, 0, -150, roadWidth, 0, 90, roadForCurve, radius);
+	CreateRect(-100.0f, 0, -200, roadWidth, 25, road, ORIENTATION::NORTH);
 
 	//Create CheckPoints
 	CreateCheckPoint({ 0.0f,0.0f,20.0f }, 90.0f);
