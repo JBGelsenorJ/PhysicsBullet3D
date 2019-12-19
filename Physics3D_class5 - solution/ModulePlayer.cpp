@@ -247,7 +247,7 @@ void ModulePlayer::RespawnVehicle(vec3 newPos, btQuaternion rotation)
 }
 
 void ModulePlayer::RestartGame() {
-	App->player->RespawnVehicle(vec3(START_POINT));
+	App->player->RespawnVehicle(vec3(START_POINT), { 0, 0 , 0, 1 });
 	App->scene_intro->boxes = 5;
 	App->scene_intro->checkpoints_index = 0;
 	App->scene_intro->box_position = 0;
