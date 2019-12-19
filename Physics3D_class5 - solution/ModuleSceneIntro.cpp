@@ -29,12 +29,14 @@ ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Modul
 	MercaWall3pb = nullptr;
 	MercaWall4pb = nullptr;
 	MercaEntrancepb = nullptr;
+	startCube = nullptr;
 	MercaWall1 = Cube(400, 40, 1);
 	MercaWall2 = Cube(400, 40, 1);
 	MercaWall3 = Cube(210, 40, 1);
 	MercaEntrance = Cube(15, 15, 10);
-
 	MercaEntrance.color = MercaWall1.color = MercaWall2.color = MercaWall3.color = LimeGreen;
+	start = Cube(32, 5, 0.4);
+	start.color = LimeGreen;
 }
 
 ModuleSceneIntro::~ModuleSceneIntro()
@@ -139,6 +141,13 @@ bool ModuleSceneIntro::Start()
 	CreateRamp(-85.0f, 0.25f, -150.0f, 0.0f, 15.0f, { 1, 0, 0 }, true);
 	CreateRamp(-90.0f, 3.7f, -212.0f, 0.0f, -25.0f, { 1, 0, 0 }, true);
 
+	//Start 
+	Cylinder bar = CreateCylinder(0.5f, 35.0f, vec3(-10, 0, -111), Turquoise, true, 0.0f, vec3(0, 0, 0));
+	Cylinder bar2 = CreateCylinder(0.5f, 35.0f, vec3(20, 0, -111), Turquoise, true, 0.0f, vec3(0, 0, 0));
+	
+	start.SetPos(5, 20,-111);
+	startCube = App->physics->AddBody(start, 0.0f);
+	
 	return ret;
 }
 
@@ -148,9 +157,10 @@ bool ModuleSceneIntro::CleanUp()
 	LOG("Unloading Intro scene");
 	
 	//Delete lists
-	for (uint i = 0; i < map.Count(); ++i) delete map[i];
+	for (uint i = 0; i < cubes.Count(); ++i) delete cubes[i];
 
 	ramp.clear();
+	cylinders.clear();
 
 	//TODO: MEMORY LEAKS
 
@@ -162,14 +172,16 @@ update_status ModuleSceneIntro::Update(float dt)
 {
 	cubitoprueba.Render();
 
+	//Draw ground
 	Cube ground(2000, 1, 2000);
-
 	ground.SetPos(0, -1, 0);
 	ground.Render();
 
+	
+	//Draw map elements
 	Cube shop2(205, 400, 1);
 	shop2.SetPos(-90, 20, -405);
-	// roof
+
 	shop2.transform.rotate(90, vec3(1, 0, 0));
 	shop2.color = LimeGreen;
 	shop2.Render();
@@ -178,9 +190,10 @@ update_status ModuleSceneIntro::Update(float dt)
 	MercaWall2.Render();
 	MercaWall3.Render();
 	MercaEntrance.Render();
+	start.Render();
 
 	//Render Map 
-	for (int i = 0; i < map.Count(); i++) map[i]->Render();
+	for (int i = 0; i < cubes.Count(); i++) cubes[i]->Render();
 	//Render CheckPoints
 	for (int i = 0; i < CheckPoints_List.Count(); i++) CheckPoints_List[i].Render();
 	//Render traps
@@ -192,7 +205,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	}
 	//Render ramps
 	for (p2List_item<Cube>* ramp_item = ramp.getFirst(); ramp_item != nullptr; ramp_item = ramp_item->next) ramp_item->data.Render();
-	
+	for (p2List_item<Cylinder>* cylinders_item = cylinders.getFirst(); cylinders_item != nullptr; cylinders_item = cylinders_item->next) cylinders_item->data.Render();
 	
 	return UPDATE_CONTINUE;
 }
@@ -255,8 +268,8 @@ void ModuleSceneIntro::CreateRect(const float& x, const float& y, const float& z
 		phys1 = App->physics->AddBody(*c1, 0.0F);
 		phys2 = App->physics->AddBody(*c2, 0.0F);
 
-		map.PushBack(c1);
-		map.PushBack(c2);
+		cubes.PushBack(c1);
+		cubes.PushBack(c2);
 	}
 }
 
@@ -277,8 +290,8 @@ void ModuleSceneIntro::CreateCurve(const float& x, const float& y, const float& 
 		curve1 = App->physics->AddBody(*c1, 0.0F);
 		curve2 = App->physics->AddBody(*c2, 0.0F);
 
-		map.PushBack(c1);
-		map.PushBack(c2);
+		cubes.PushBack(c1);
+		cubes.PushBack(c2);
 	}
 
 }
@@ -315,7 +328,7 @@ void ModuleSceneIntro::SetBoxes(const vec3 Position) {
 	Boxes_List.add(box);
 
 	phys = App->physics->AddBody(*box, this, 0.0F, true);
-	map.PushBack(box);
+	cubes.PushBack(box);
 }
 
 void ModuleSceneIntro::CheckBoxes() {
@@ -366,4 +379,21 @@ void ModuleSceneIntro::CreateHinge(vec3 Position, float speed, int way) {
 
 	hinge = App->physics->AddConstraintHinge(*bodyA, *bodyB, vec3(0, 0, 0), vec3(5, 0, 0), vec3(0, way, 0), vec3(0, 1, 0), true);
 	hinge->enableAngularMotor(true, speed, INFINITE);
+}
+
+Cylinder ModuleSceneIntro::CreateCylinder(float radius, float height, vec3 pos, Color color, bool flip, float angle, vec3 u)
+{
+	Cylinder cy(radius, height);
+	cy.SetPos(pos.x, pos.y, pos.z);
+	cy.color = color;
+
+	if (flip)
+		cy.SetRotation(90.0f, vec3(0.0f, 0.0f, 1.0f));
+
+	if (angle != 0.0f)
+		cy.SetRotation(angle, vec3(u.x, u.y, u.z));
+
+	cylinders.add(cy);
+
+	return cy;
 }

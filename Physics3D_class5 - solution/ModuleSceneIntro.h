@@ -34,6 +34,7 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
+	Cylinder CreateCylinder(float radius, float height, vec3 pos, Color color, bool flip, float angle, vec3 u);
 	void CreateRect(const float& x, const float& y, const float& z, const float& width, const float& length, const Cube& cube, ORIENTATION orientation = ORIENTATION::NORTH);	
 	void CreateRamp(const float x, const float y, const float z, float mass, float angle, vec3 angle_rot, bool is_collider);
 	void CreateCurve(const float& x, const float& y, const float& z, const float& width, const float& angle_i, const float& angle_f, const Cube& cube, const float& radius);
@@ -46,8 +47,6 @@ public:
 	void CreateHinge(vec3 Position, float speed, int way);
 	void RenderMap();
 public:
-
-	p2DynArray <Cube*> map;
 
 	PhysBody3D* pb_chassis;
 	Cube p_chassis;
@@ -69,6 +68,9 @@ public:
 	p2DynArray<PhysBody3D*> HingesBody;
 	p2List<Cube> ramp;
 
+	p2DynArray <Cube*> cubes;
+	p2List<Cylinder> cylinders;
+
 	Cube MercaWall1;
 	PhysBody3D* MercaWall1pb = nullptr;
 	Cube MercaWall2;
@@ -79,7 +81,9 @@ public:
 	PhysBody3D* MercaWall4pb = nullptr;
 	Cube MercaEntrance;
 	PhysBody3D* MercaEntrancepb = nullptr;
-
+	Cube start;
+	PhysBody3D* startCube = nullptr;
+	
 	//Hinges
 	PhysBody3D* bodyA = nullptr;
 	Cube axis;
