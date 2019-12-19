@@ -39,8 +39,7 @@ ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Modul
 	start = Cube(32, 5, 0.4);
 	start.color = LimeGreen;
 
-	minutes = 1;
-	seconds = 60.0f;
+	seconds = 30.0f;
 }
 
 ModuleSceneIntro::~ModuleSceneIntro()
@@ -432,14 +431,13 @@ Cylinder ModuleSceneIntro::CreateCylinder(float radius, float height, vec3 pos, 
 
 void ModuleSceneIntro::TimeToLoseUpdate(float dt)
 {
-	if (minutes >= 0) {
-		seconds -= 1.0f * dt;
+	
+	seconds -= 1.0f * dt;
 
-		if (seconds <= 0)
-		{
-			seconds = 60.0f;
-			minutes -= 1;
-		}
+	if (seconds <= 0)
+	{
+		seconds = 30.0f;
+		
 	}
 	else
 	{
