@@ -321,7 +321,7 @@ void ModuleSceneIntro::SetBoxes(const vec3 Position) {
 	Boxes_List.add(box);
 
 
-	map.PushBack(box);
+	cubes.PushBack(box);
 
 }
 
