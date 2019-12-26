@@ -37,6 +37,7 @@ public:
 	Timer nitroTimer;
 	bool nitro = true;
 	uint winFx;
+	uint loseFx;
 
 	//Cube Vehicle_Sensor;
 	//PhysBody3D* Vehicle_PB;

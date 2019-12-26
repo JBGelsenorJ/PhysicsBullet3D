@@ -121,8 +121,8 @@ bool ModulePlayer::Start()
 	Vehicle_Sensor.SetPos(5.0f, 2.0f, -116.5f);
 	Vehicle_PB = App->physics->AddBody(Vehicle_Sensor, this, 0.0f, false, PBType::CAR);*/
 
-	winFx = App->audio->LoadFx("Audio/Fx/Homer.wav");
-
+	winFx = App->audio->LoadFx("audio/Homer.wav");
+	loseFx = App->audio->LoadFx("audio/lose.wav");
 	return true;
 }
 
@@ -150,7 +150,7 @@ update_status ModulePlayer::Update(float dt)
 		switch (App->scene_intro->checkpoints_index)
 		{
 		case 0:
-			App->player->RespawnVehicle(vec3(START_POINT), { 0, 0, 0, 1 });
+			App->player->RespawnVehicle(vec3(CHECKPOINT_1), { 0, 0, 0, 1 });
 			break;
 		case 1:
 			App->player->RespawnVehicle(vec3(CHECKPOINT_0), { 0, 1, 0, 0 });
@@ -160,6 +160,7 @@ update_status ModulePlayer::Update(float dt)
 			break;
 		case 3:
 			App->player->RespawnVehicle(vec3(CHECKPOINT_2), { 0, 1, 0, 0 });
+			App->scene_intro->startCountdown = true;
 			break;
 		}
 	}
@@ -242,12 +243,14 @@ void ModulePlayer::RespawnVehicle(vec3 newPos, btQuaternion rotation)
 
 }
 
-void ModulePlayer::RestartGame() {
+void ModulePlayer::RestartGame() 
+{
 	App->player->RespawnVehicle(vec3(START_POINT), { 0, 0 , 0, 1 });
 	App->scene_intro->HamburguerNumber = 1;
 	App->scene_intro->StopRenderBurguer = false;
 	App->scene_intro->checkpoints_index = 0;
 	for (uint i = 0; i < App->scene_intro->CheckPoints_List.Count(); i++) App->scene_intro->CheckPoints_List[i].color = White;
-	App->scene_intro->seconds = 30.0f;
+	App->scene_intro->endTime = false;
 	App->scene_intro->startCountdown = false;
+	App->scene_intro->seconds = 30.0f;
 }

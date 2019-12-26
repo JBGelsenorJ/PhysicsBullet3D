@@ -50,7 +50,7 @@ ModuleSceneIntro::~ModuleSceneIntro()
 // Load assets
 bool ModuleSceneIntro::Start()
 {
-	App->audio->PlayMusic("music/mercadonaremix.ogg");
+	App->audio->PlayMusic("audio/mercadonaremix.ogg");
 
 	LOG("Loading Intro assets");
 	bool ret = true;
@@ -210,11 +210,16 @@ update_status ModuleSceneIntro::Update(float dt)
 	for (p2List_item<Cylinder>* cylinders_item = cylinders.getFirst(); cylinders_item != nullptr; cylinders_item = cylinders_item->next) cylinders_item->data.Render();
 
 	//If you collected the 5 boxes you win and game restarts. Win condition
-	if(HamburguerNumber == 0)App->player->RestartGame();
-	//Lose condition
-	if (endTime) {
-		//App->audio->PlayFx(App->player->winFx);
+	if (HamburguerNumber == 0)
+	{
 		App->player->RestartGame();
+	}
+	
+	//Lose condition
+	if (endTime) 
+	{
+		App->player->RestartGame();
+		App->audio->PlayFx(App->player->loseFx);
 	}
 	return UPDATE_CONTINUE;
 }
@@ -458,10 +463,8 @@ void ModuleSceneIntro::TimeToLoseUpdate(float dt)
 	if (seconds <= 0)
 	{
 		seconds = 30.0f;
+		endTime = true;
 		
 	}
-	else
-	{
-		endTime = true;
-	}
+	
 }
