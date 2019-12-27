@@ -104,8 +104,8 @@ bool ModuleSceneIntro::Start()
 	CreateCheckPoint({ -100.0f, 2.5f, -40.0f }, 90.0f);
 	CreateCheckPoint({ -90.0f, 2.5f, -250.0f }, 90.0f);
 
-	SetBurguer({ -40.0f,0.0f,-480.0f });
-	SetBurguerSensor({ -40.0f,2.5f,-480.0f });
+	SetBurguer(vec3(POSITION_BURGUER_1));
+	SetBurguerSensor(vec3(POSITION_BURGUER_1));
 
 	//Hinges
 	CreateHinge({ 5.0f, 1.0f, 40.0f }, 1.0f, 1);
@@ -213,6 +213,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	if (HamburguerNumber == 0)
 	{
 		App->player->RestartGame();
+		
 	}
 	
 	//Lose condition
@@ -251,6 +252,7 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		StopRenderBurguer = true;
 		HamburguerNumber--;
 		App->audio->PlayFx(App->player->winFx);
+		BurguerPosition += 1;
 	}
 
 }

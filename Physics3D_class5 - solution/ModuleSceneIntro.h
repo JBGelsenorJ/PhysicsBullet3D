@@ -6,6 +6,9 @@
 #include "Bullet/include/btBulletDynamicsCommon.h"
 
 #define MAX_SNAKE 2
+#define POSITION_BURGUER_1 -40.0 , 0.0 ,-480.0
+#define POSITION_BURGUER_2 -150, 0.0, -480.0 
+#define POSITION_BURGUER_3 -150, 0.0, -380.0
 
 struct PhysBody3D;
 struct PhysMotor3D;
@@ -109,7 +112,8 @@ public:
 	Burguer Hamburguer;
 	int HamburguerNumber = 1;
 	bool StopRenderBurguer = false;
-	
+	int BurguerPosition = 0;
+
 	//Timer
 	int minutes = 0;
 	float seconds = 0;

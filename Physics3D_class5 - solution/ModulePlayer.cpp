@@ -253,4 +253,26 @@ void ModulePlayer::RestartGame()
 	App->scene_intro->endTime = false;
 	App->scene_intro->startCountdown = false;
 	App->scene_intro->seconds = 30.0f;
+
+	switch (App->scene_intro->BurguerPosition)
+	{
+	case 0:
+		App->scene_intro->SetBurguer(vec3(POSITION_BURGUER_1));
+		App->scene_intro->SetBurguerSensor(vec3(POSITION_BURGUER_1));
+		break;
+	case 1:
+		App->scene_intro->SetBurguer(vec3(POSITION_BURGUER_2));
+		App->scene_intro->SetBurguerSensor(vec3(POSITION_BURGUER_2));
+		break;
+	case 2:
+		App->scene_intro->SetBurguer(vec3(POSITION_BURGUER_3));
+		App->scene_intro->SetBurguerSensor(vec3(POSITION_BURGUER_3));
+		break;
+
+	}
+
+	if (App->scene_intro->BurguerPosition == 2)
+	{
+		App->scene_intro->BurguerPosition = -1;
+	}
 }
